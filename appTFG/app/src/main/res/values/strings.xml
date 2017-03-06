@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">appTFG</string>
+    <string name="permission_sms_send" />
+    <string name="settings" />
+</resources>
