@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#8904B1"
+    tools:context="tutorial.com.movilidad1.VozTexto">
+
+    <ImageButton
+        android:id="@+id/img_btn_hablar"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:contentDescription="@string/app_name"
+        android:onClick="onClickImgBtnHablar"
+        android:background="@drawable/micro"
+        android:layout_marginBottom="29dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:background="@drawable/redondear2"
+        android:hint="Click en el microfono para hablar"
+        android:textStyle="bold"
+        android:textColorHint="#FFFFFF"
+        android:textColor="#FFFFFF"
+
+        android:layout_height="wrap_content"
+        android:id="@+id/txtGrabarVoz"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:phoneNumber="false"
+        android:textSize="18dp" />
+
+    <Button
+        android:id="@+id/btnenviar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/enviar"
+        android:layout_weight="0.04"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="27dp"
+        android:layout_below="@+id/txtGrabarVoz"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>

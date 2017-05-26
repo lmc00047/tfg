@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_light"
+    >
+
+    <Button
+        android:id="@+id/botonLlamada112"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:background="@drawable/redondear4"
+        android:layout_margin="15dp"
+        android:text="@string/llamada112"
+
+        />
+    <Button
+        android:id="@+id/leerSms"
+        android:layout_below="@+id/botonLlamada112"
+        android:text="@string/leersms"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:background="@drawable/redondear4"
+        android:layout_margin="15dp"
+        />
+    <Button
+        android:id="@+id/botonEnviarsms"
+        android:layout_below="@+id/leerSms"
+        android:text="@string/msgsms"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:background="@drawable/redondear4"
+        android:layout_margin="15dp"
+        />
+    <Button
+        android:id="@+id/nombre"
+        android:layout_below="@+id/botonEnviarsms"
+        android:layout_width="match_parent"
+        android:text="@string/perfil"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:background="@drawable/redondear4"
+        android:layout_margin="15dp"
+        android:layout_height="50dp"
+        />
+
+</LinearLayout>

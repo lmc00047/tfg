@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Movilidad Reducida</string>
+    <string name="permission_sms_send">Esta aplicación reequiere de permisos para enviar SMS para poder enviar mensajes a su contacto favorito</string>
+   <string name="settings">Configurar</string>
+    <string name="configuracion">Configuración</string>
+    <string name="personalizacion">Personalización</string>
+    <string name="acerca">Acerca de...</string>
+    <string name="reconocimiento">Reconocimiento de voz</string>
+    <string name="ErrorReconocimiento">Tú dispositivo no soporta el reconocimiento por voz</string>
+    <string name="enviarmensaje">Mensaje enviado</string>
+    <string name="laura">Hola Laura Este mensaje ha sido enviado</string>
+    <string name="mensaje">Enviando mensaje...</string>
+    <string name="smsenviado">SMS enviado</string>
+    <string name="perfil">Mi Perfil</string>
+    <string name="errorsms">Su SMS no pudo ser enviado</string>
+    <string name="acercade">Esta aplicación ha sido realizada por Laura Moreno Chicharro. Consiste en una aplicación de asistencia destinada a personas con movilidad reducida o muy reducida.</string>
+
+    <string name="salir"> </string>
+    <string name="llamada112">Llamada automática 112</string>
+    <string name="msgsms">Enviar email o Sms</string>
+    <string name="leersms">¿Quiere escuchar sus mensajes?</string>
+
+
+</resources>
+
