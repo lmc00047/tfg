@@ -87,7 +87,7 @@ public class FragmentoFecha extends Fragment
         final Runnable updateTask = new Runnable() {
             public void run() {
                 Date fecha= new Date();;
-                SimpleDateFormat formato= new SimpleDateFormat("dd-MM-yyyy");
+                SimpleDateFormat formato= new SimpleDateFormat("dd/MM/yyyy");
 
                 SimpleDateFormat formato2= new SimpleDateFormat("HH:mm:ss");
                 String fechas= formato.format(fecha)+"\n"+formato2.format(fecha);

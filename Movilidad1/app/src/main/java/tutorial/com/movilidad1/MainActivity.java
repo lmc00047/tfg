@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     private String comments = null;
     private View mLayout;
     public View microfono;
-    public View corazon;
     public View configuracion;
     private static final int VOICE_RECOGNITION_REQUEST_CODE = 1;
     private Button bt_start;
@@ -35,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mLayout = findViewById(R.id.fragmentbotones);
         microfono = findViewById(R.id.microfono);
-        configuracion = findViewById(R.id.configuracion);
+
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); //pantalla activa
     }
 
@@ -48,13 +47,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-        corazon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
 
-            }
-
-        });
 
     }
 
@@ -67,6 +60,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        //String idS;
+        //idS = id+"";
+        //Toast.makeText(this,idS, Toast.LENGTH_LONG).show();
+
         if (id == R.id.microfono) {
             Toast.makeText(this, R.string.reconocimiento, Toast.LENGTH_LONG).show();
 
@@ -78,12 +75,17 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.configuracion) {
             Toast.makeText(this, R.string.configuracion, Toast.LENGTH_LONG).show();
+            Intent j = new Intent(getApplicationContext(), Configuracion.class);
+            startActivity(j);
+
             return true;
         }
-        if (id == R.id.personalizacion) {
+        /*if (id == R.id.personalizacion) {
             Toast.makeText(this, R.string.personalizacion, Toast.LENGTH_LONG).show();
             return true;
-        }
+            Intent i = new Intent(getApplicationContext(), AcercaDe.class);
+            startActivity(i);
+        }*/
         if (id == R.id.acercade) {
             Toast.makeText(this, R.string.acerca, Toast.LENGTH_LONG).show();
             Intent i = new Intent(getApplicationContext(), AcercaDe.class);

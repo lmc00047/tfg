@@ -15,7 +15,7 @@ android:layout_height="match_parent">
 
     android:textSize="25dp"
     android:ems="10"
-    android:background="@drawable/redondear3"
+    android:background="@drawable/redondear4"
     android:layout_marginTop="63dp"
 
     android:layout_centerHorizontal="true" />
