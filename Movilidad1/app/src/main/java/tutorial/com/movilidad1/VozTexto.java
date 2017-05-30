@@ -77,7 +77,7 @@ public class VozTexto extends Activity {
    }
     public void LanzarEmail()
     {
-        Intent i = new Intent(this.getApplicationContext(), SendEmail.class);
+        Intent i = new Intent(this.getApplicationContext(), EnviarEmail.class);
         i.putExtra("Siri",grabar.getText().toString());
         startActivity(i);
     }

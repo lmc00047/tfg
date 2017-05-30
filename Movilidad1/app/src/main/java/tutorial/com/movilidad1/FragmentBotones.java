@@ -13,6 +13,8 @@ import android.widget.Button;
 public class FragmentBotones extends Fragment
 {
 
+    private View mLayout;
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -21,6 +23,7 @@ public class FragmentBotones extends Fragment
         Button botonRtp = (Button) view.findViewById(R.id.botonAzul);
         Button botonSms = (Button) view.findViewById(R.id.botonVerde);
         Button botonEmergencias = (Button) view.findViewById(R.id.botonAmarillo);
+
 
 
 
@@ -38,21 +41,27 @@ public class FragmentBotones extends Fragment
 
 
 //-----------------------------------------BOTON AMARILLO------------------------------------------------//
-//OnClick del boton llamada Emergencias
+    //OnClick del boton llamada Emergencias
         botonEmergencias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
             lanzarLlamada112();
+
+
+
             }
 
         });
-//OnLongClick del boton llamada Emergencias
+    //OnLongClick del boton llamada Emergencias
       botonEmergencias.setOnLongClickListener(new View.OnLongClickListener() {
-        @RequiresApi(api = Build.VERSION_CODES.M)
+        //@RequiresApi(api = Build.VERSION_CODES.M)
         @Override
         public boolean onLongClick(View arg0) {
-           lanzarSms();
+          lanzarSms();
+            //verifyPermission();
+
             return true;
+
         }
 
         });
@@ -62,7 +71,7 @@ public class FragmentBotones extends Fragment
 
 
 //-----------------------------------------BOTON VERDE----------------------------------------------------//
-        //OnClick del boton Mensaje (De voz a texto)
+    //OnClick del boton Mensaje (De voz a texto)
         botonSms.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View arg1) {
@@ -70,7 +79,7 @@ public class FragmentBotones extends Fragment
             }
         });
 
-        //onLongClick del boton Mensje (De texto a voz)
+    //onLongClick del boton Mensje (De texto a voz)
         botonSms.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View arg0) {
@@ -84,7 +93,7 @@ public class FragmentBotones extends Fragment
 
 
 //-----------------------------------------BOTON AZUL----------------------------------------------------//
-        //OnClick del boton RTP
+    //OnClick del boton RTP
         botonRtp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
@@ -95,7 +104,7 @@ public class FragmentBotones extends Fragment
 
 
 //
-//        //OnClick Largo del boton emergencias
+//  //OnClick Largo del boton emergencias
 //        botonRtp.setOnLongClickListener(new View.OnLongClickListener() {
 //            @Override
 //            public boolean onLongClick(View arg0) {
@@ -112,6 +121,9 @@ public class FragmentBotones extends Fragment
     }
 
 
+
+
+
     //Lanzar Activity Reconocimiento de voz
        public void lanzarReconocimiento()
     {
@@ -123,7 +135,7 @@ public class FragmentBotones extends Fragment
     //Lanzar Activity Texto a Voz- Siri
     public void lanzarSiri()
     {
-        Intent i = new Intent(getContext(), siri.class);
+        Intent i = new Intent(getContext(), TextoVoz.class);
         startActivity(i);
     }
 
@@ -151,7 +163,10 @@ public class FragmentBotones extends Fragment
     //Lanzar Sms a 112
     public void lanzarSms()
     {
-
+        Intent i = new Intent(getContext(), SendSmS.class);
+        startActivity(i);
     }
+
+
 }
 

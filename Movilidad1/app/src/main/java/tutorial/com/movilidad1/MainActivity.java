@@ -1,8 +1,14 @@
 package tutorial.com.movilidad1;
 
+import android.Manifest;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.support.annotation.RequiresApi;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -10,24 +16,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.Toast;
-
-import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity {
     //Declaración de variables
-    private static final int MY_WRITE_EXTERNAL_STORAGE = 0;
-    private String comments = null;
     private View mLayout;
     public View microfono;
-    public View configuracion;
-    private static final int VOICE_RECOGNITION_REQUEST_CODE = 1;
-    private Button bt_start;
-    private Vector<String> nombres;
-    private Vector<String> telefonos;
     protected PowerManager.WakeLock wakelock; //Pantalla siempre activa
+    private static final int MY_WRITE_EXTERNAL_STORAGE = 0;
+    int aux = 0;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +34,13 @@ public class MainActivity extends AppCompatActivity {
         mLayout = findViewById(R.id.fragmentbotones);
         microfono = findViewById(R.id.microfono);
 
+
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); //pantalla activa
+
+        if (aux == 0) {
+            requestPermission();
+            aux = 1;
+        }
     }
 
     public void onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -103,7 +108,48 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //Paso 2: Solicitar permiso
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void requestPermission() {
+        //shouldShowRequestPermissionRationale es verdadero solamente si ya se había mostrado
+        //anteriormente el dialogo de permisos y el usuario lo negó
+        Toast.makeText(this, "OLEEEEEEE", Toast.LENGTH_LONG).show();
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.SEND_SMS)) {
+            showSnackBar();
+        } else {
+            //si es la primera vez se solicita el permiso directamente
+            requestPermissions(new String[]{Manifest.permission.SEND_SMS},
+                    MY_WRITE_EXTERNAL_STORAGE);
+        }
+    }
 
+    /**
+     * Método para mostrar el snackbar de la aplicación.
+     * Snackbar es un componente de la librería de diseño 'com.android.support:design:23.1.0'
+     * y puede ser personalizado para realizar una acción, como por ejemplo abrir la actividad de
+     * configuración de nuestra aplicación.
+     */
+    private void showSnackBar() {
+        Snackbar.make(mLayout, R.string.permission_sms_send,
+                Snackbar.LENGTH_LONG)
+                .setAction(R.string.settings, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        openSettings();
+                    }
+                })
+                .show();
+    }
+
+    /**
+     * Abre el intento de detalles de configuración de nuestra aplicación
+     */
+    public void openSettings() {
+        Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        intent.setData(Uri.parse("package:" + getPackageName()));
+        startActivity(intent);
+    }
 
 
 

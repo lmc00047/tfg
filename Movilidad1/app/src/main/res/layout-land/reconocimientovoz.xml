@@ -19,7 +19,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:background="#FF8000"
+        android:background="#FFBF00"
         android:text="@string/reconocimiento"
         android:textColor="#FFFFFF"
         android:layout_height="50dp"

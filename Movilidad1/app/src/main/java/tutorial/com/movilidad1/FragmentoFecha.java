@@ -1,7 +1,8 @@
 package tutorial.com.movilidad1;
 
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,11 +26,8 @@ public class FragmentoFecha extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragmentofecha, container, false);
-
         botonFecha = (Button) view.findViewById(R.id.button6);
-
         final View frag = view.findViewById(R.id.fragment4);
-
 
         //Obtener fecha actual
         Calendar calendarNow = Calendar.getInstance();
@@ -38,33 +36,12 @@ public class FragmentoFecha extends Fragment
         final int year = calendarNow.get(Calendar.YEAR);
 
         //OnClick del boton fecha
-        botonFecha.setOnClickListener(new View.OnClickListener() {
+        botonFecha.setOnLongClickListener(new View.OnLongClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
-            public void onClick(View view) {
-                //doble click para habilitar el segundo fragment de los botones
-                i++;
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        if (i == 1)
-                        {
-                            //Si hace un single click no hace nada
-                        }
-                        else
-                        {
-                            if(i == 2)
-                            {
-                               frag.setVisibility(View.VISIBLE);
-
-                            }
-
-                        }
-
-                    }
-                },500);
-
+            public boolean onLongClick(View arg0) {
+                frag.setVisibility(View.VISIBLE);
+                return true;
             }
         });
 

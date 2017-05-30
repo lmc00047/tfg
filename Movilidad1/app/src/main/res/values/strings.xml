@@ -15,14 +15,28 @@
     <string name="aceptar">Automática</string>
     <string name="cancel">Manual</string>
     <string name="errorsms">Su SMS no pudo ser enviado</string>
-    <string name="acercade">Esta aplicación ha sido realizada por Laura Moreno Chicharro. Consiste en una aplicación de asistencia destinada a personas con movilidad reducida o muy reducida.</string>
+    <string name="acercade">Esta aplicación ha sido realizada por Laura Moreno Chicharro. Permite facilitar las acciones de comunicación más importantes y comunes a personas con movilidad reducida o muy reducida.</string>
     <string name="cuadrollamada">¿Quiere que se haga automáticamente la llamada a emergencias?</string>
     <string name="salir"> </string>
     <string name="llamada112">Llamada automática 112</string>
     <string name="msgsms">Enviar email o Sms</string>
     <string name="leersms">¿Quiere escuchar sus mensajes?</string>
+    <string name="no">No </string>
+    <string name="si">Si </string>
+    <string name="sms">SMS </string>
+    <string name="email">Email </string>
+    <string name="ambos">Email-sms </string>
     <string name="Manual">Manual </string>
     <string name="Automatica">Automática </string>
+    <string name="asunto">Asunto:</string>
+    <string name="to">Para:</string>
+    <string name="escribemensaje">Escribe el mensaje</string>
+    <string name="reproducir">Escribe el texto para reproducir...</string>
+    <string name="hablar">Click en el microfono para hablar</string>
+    <string name="nombre">Nombre</string>
+    <string name="user">Mi perfil                                                      </string>
+    <string name="correo">Email</string>
+ <string name="pass">Contraseña email</string>
 
 
 </resources>

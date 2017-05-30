@@ -81,19 +81,19 @@ public class ReconocimientoVoz extends Activity {
                             break;
                         case "enviar":
 
-                            Intent enviar = new Intent(this.getApplication(), SendEmail.class);
+                            Intent enviar = new Intent(this.getApplication(), EnviarEmail.class);
                             startActivity(enviar);
 
                             break;
                         case "email":
 
-                            Intent email = new Intent(this.getApplicationContext(), SendEmail.class);
+                            Intent email = new Intent(this.getApplicationContext(), EnviarEmail.class);
                             startActivity(email);
 
                             break;
                         case "correo":
 
-                            Intent correo = new Intent(this.getApplicationContext(), SendEmail.class);
+                            Intent correo = new Intent(this.getApplicationContext(), EnviarEmail.class);
                             startActivity(correo);
 
                             break;
@@ -105,7 +105,7 @@ public class ReconocimientoVoz extends Activity {
                             break;
                         case "texto":
 
-                            Intent texto = new Intent(this.getApplicationContext(), siri.class);
+                            Intent texto = new Intent(this.getApplicationContext(), TextoVoz.class);
                             startActivity(texto);
 
                             break;

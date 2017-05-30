@@ -9,7 +9,7 @@ public class LlamarContacto extends Activity{
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
 
-            //Llamar directamente a un contacto
+            //Llamar directamente a un contacto favorito
             Intent intent = new Intent(Intent.ACTION_DIAL);
             startActivity(intent);
 
