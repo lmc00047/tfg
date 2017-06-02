@@ -23,9 +23,9 @@
     <string name="leersms">¿Quiere escuchar sus mensajes?</string>
     <string name="no">No </string>
     <string name="si">Si </string>
-    <string name="sms">SMS </string>
-    <string name="email">Email </string>
-    <string name="ambos">Email-sms </string>
+    <string name="sms">Email-SMS</string>
+    <string name="email">SMS-Email</string>
+     <string name="DefaultEmail">Default</string>
     <string name="Manual">Manual </string>
     <string name="Automatica">Automática </string>
     <string name="asunto">Asunto:</string>

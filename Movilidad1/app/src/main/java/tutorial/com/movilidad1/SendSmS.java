@@ -2,6 +2,8 @@ package tutorial.com.movilidad1;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -15,11 +17,22 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Properties;
+
+import javax.mail.Authenticator;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+
 public class SendSmS extends Activity {
 
     private static final int MY_WRITE_EXTERNAL_STORAGE = 0;
     private View mLayout;
     private EditText name;
+    Session session;
+    ProgressDialog pdialog;
+    Context context;
+    static String rec, subject, textMessage, textoSiri;
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -42,12 +55,15 @@ public class SendSmS extends Activity {
         } else {
             try {
                 SmsManager smsManager = SmsManager.getDefault();
-                smsManager.sendTextMessage("5554", null, "Hola "+MiPerfil.name.getText().toString()+" Este mensaje ha sido enviado", null, null);
+                smsManager.sendTextMessage("112", null, "Hola soy "+MiPerfil.name.getText().toString()+" y tengo una urgencia", null, null);
                 Toast.makeText(getApplicationContext(), "SMS enviado", Toast.LENGTH_LONG).show();
+
+                EnviarEmail send = new EnviarEmail();
+                send.EnviarEmail("apptfglaura@gmail.com","Emergencia","Hola soy "+MiPerfil.name.getText().toString()+" y tengo una urgencia");
             } catch (Exception e) {
 
 
-                Toast.makeText(getApplicationContext(), "SMS FAIL", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "ERROR SMS. Para poder enviar SMS hay que establecer un nombre en configuración.", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -80,12 +96,45 @@ public class SendSmS extends Activity {
                 //saveComments();
                 try {
                     SmsManager smsManager = SmsManager.getDefault();
-                    smsManager.sendTextMessage("5554", null, "Hola "+MiPerfil.name.getText().toString()+" Este mensaje ha sido enviado", null, null);
+                    smsManager.sendTextMessage("112", null, "Hola soy "+MiPerfil.name.getText().toString()+" y tengo una urgencia", null, null);
                     Toast.makeText(getApplicationContext(), "SMS enviado", Toast.LENGTH_LONG).show();
+
+                    //if(EnviarSmsoEmail.estadoEmail==1)
+                    //{
+                        EnviarEmail.rec =MiPerfil.email.getText().toString();
+                        EnviarEmail.subject = "Emergencia";
+                        context=this;
+                        Properties props = new Properties();
+                        props.put("mail.smtp.host", "smtp.gmail.com");
+                        props.put("mail.smtp.socketFactory.port", "465");
+                        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+                        props.put("mail.smtp.auth", "true");
+                        props.put("mail.smtp.port", "465");
+                        session = Session.getDefaultInstance(props, new Authenticator() {
+                            protected PasswordAuthentication getPasswordAuthentication() {
+                                return new PasswordAuthentication(MiPerfil.email.getText().toString(), MiPerfil.pass.getText().toString());
+                            }
+                        });
+
+                        pdialog = ProgressDialog.show(context, "", "Enviando Email...", true);
+
+                        EnviarEmail.RetreiveFeedTask task = new EnviarEmail.RetreiveFeedTask();
+                    Toast.makeText(context, "SMS Sergio", Toast.LENGTH_LONG).show();
+                        task.execute();
+                   // }
+
+
+
+
+
+
+
+
+
                 } catch (Exception e) {
 
 
-                    Toast.makeText(getApplicationContext(), "SMS FAIL", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "ERROR SMS. Para poder enviar SMS hay que establecer un nombre en configuración.", Toast.LENGTH_LONG).show();
                 }
 
             } else {

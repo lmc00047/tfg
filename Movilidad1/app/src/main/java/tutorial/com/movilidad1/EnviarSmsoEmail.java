@@ -8,6 +8,11 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
 public class EnviarSmsoEmail extends DialogFragment {
+
+    public static int estadoEmailSms;
+    public static int estadoEmail;
+    public static int estadoSms;
+
     static EnviarSmsoEmail newInstance(String title) {
         EnviarSmsoEmail fragment = new EnviarSmsoEmail();
         Bundle args = new Bundle();
@@ -26,7 +31,9 @@ public class EnviarSmsoEmail extends DialogFragment {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // TODO Auto-generated method stub
+                        // TODO Auto-generated method stub //Cuando se envia un sms se envía también un Email
+                         EnviarSmsoEmail.this.estadoEmail = 1;
+
                         ((Configuracion) getActivity()).doPositiveClick();
                     }
                 })
@@ -35,17 +42,22 @@ public class EnviarSmsoEmail extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // TODO Auto-generated method stub
+                        EnviarSmsoEmail.this.estadoSms = 1;
                         ((Configuracion) getActivity()).doNegativeClick();
                     }
                 })
-                .setNeutralButton(R.string.ambos, new DialogInterface.OnClickListener() {
+                .setNeutralButton(R.string.DefaultEmail, new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // TODO Auto-generated method stub
+                        // TODO Auto-generated method stub //Cuando se envia un EMail se envía también un SMS
+                        EnviarSmsoEmail.this.estadoEmail = 0;
+                        EnviarSmsoEmail.this.estadoSms = 0;
+
                         ((Configuracion) getActivity()).doNegativeClick();
                     }
                 })
+
 
                 .create();
     }

@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
     public void requestPermission() {
         //shouldShowRequestPermissionRationale es verdadero solamente si ya se había mostrado
         //anteriormente el dialogo de permisos y el usuario lo negó
-        Toast.makeText(this, "OLEEEEEEE", Toast.LENGTH_LONG).show();
+
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.SEND_SMS)) {
             showSnackBar();
@@ -150,6 +150,15 @@ public class MainActivity extends AppCompatActivity {
         intent.setData(Uri.parse("package:" + getPackageName()));
         startActivity(intent);
     }
+
+
+
+
+
+
+
+
+
 
 
 

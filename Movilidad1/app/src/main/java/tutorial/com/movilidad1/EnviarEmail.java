@@ -4,7 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.View;
+        import android.telephony.SmsManager;
+        import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -23,11 +24,22 @@ import javax.mail.internet.MimeMessage;
 
 public class EnviarEmail extends Activity implements View.OnClickListener, Serializable {
 
-    Session session;
-    ProgressDialog pdialog;
-    Context context;
-    EditText reciep, sub, msg;
-    String rec, subject, textMessage, textoSiri;
+    static Session session;
+    static ProgressDialog pdialog;
+    static Context context;
+    static EditText reciep, sub, msg;
+    static String rec, subject, textMessage, textoSiri;
+    private EditText email;
+    private EditText pass;
+
+public EnviarEmail(){}
+
+    public EnviarEmail(String rec, String subject, String textMessage)
+    {
+        this.rec = rec;
+        this.subject = subject;
+        this.textMessage = textMessage;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +66,7 @@ public class EnviarEmail extends Activity implements View.OnClickListener, Seria
         rec = reciep.getText().toString();
         subject = sub.getText().toString();
         textMessage = msg.getText().toString();
+        Toast.makeText(getApplicationContext(),MiPerfil.email.getText().toString(), Toast.LENGTH_LONG).show();
 
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
@@ -61,10 +74,10 @@ public class EnviarEmail extends Activity implements View.OnClickListener, Seria
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.port", "465");
-
+//"appTFGLaura@gmail.com", "appTFGLaura16"
         session = Session.getDefaultInstance(props, new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("appTFGLaura@gmail.com", "appTFGLaura16");
+                return new PasswordAuthentication(MiPerfil.email.getText().toString(), MiPerfil.pass.getText().toString());
             }
         });
 
@@ -72,13 +85,26 @@ public class EnviarEmail extends Activity implements View.OnClickListener, Seria
 
         RetreiveFeedTask task = new RetreiveFeedTask();
         task.execute();
+
+        if(EnviarSmsoEmail.estadoSms==1)
+        {
+            try {
+                SmsManager smsManager = SmsManager.getDefault();
+                smsManager.sendTextMessage("112", null, textMessage, null, null);
+                Toast.makeText(getApplicationContext(), "SMS enviado", Toast.LENGTH_LONG).show();
+            } catch (Exception e) {
+
+
+                Toast.makeText(getApplicationContext(), "ERROR SMS. Para poder enviar SMS hay que establecer un nombre en configuración.", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
-    class RetreiveFeedTask extends AsyncTask<String, Void, String> {
+    public static class RetreiveFeedTask extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... params) {
-
+//            Toast.makeText(context, "SMS Sergio", Toast.LENGTH_LONG).show();
             try {
                 Message message = new MimeMessage(session);
                 message.setFrom(new InternetAddress(rec));
@@ -96,11 +122,38 @@ public class EnviarEmail extends Activity implements View.OnClickListener, Seria
 
         @Override
         protected void onPostExecute(String result) {
-            pdialog.dismiss();
+           /* pdialog.dismiss();
             reciep.setText("");
             msg.setText("");
-            sub.setText("");
-            Toast.makeText(getApplicationContext(), R.string.enviarmensaje, Toast.LENGTH_LONG).show();
+            sub.setText("");*/
+            //Toast.makeText(, R.string.enviarmensaje, Toast.LENGTH_LONG).show();
         }
+    }
+
+    public static void EnviarEmail(String rect, String subject2, String textMessage2)
+    {
+        rec = rect;
+        subject = subject2;
+        textMessage = textMessage2;
+
+     // Toast.makeText(getApplicationContext(),MiPerfil.email.getText().toString(), Toast.LENGTH_LONG).show();
+
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "465");
+//"appTFGLaura@gmail.com", "appTFGLaura16"
+        session = Session.getDefaultInstance(props, new Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(MiPerfil.email.getText().toString(), MiPerfil.pass.getText().toString());
+            }
+        });
+
+       // pdialog = ProgressDialog.show(context, "", "Enviando mensaje...", true);
+
+        RetreiveFeedTask task = new RetreiveFeedTask();
+        task.execute();
     }
 }

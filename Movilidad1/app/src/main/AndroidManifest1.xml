@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="tutorial.com.movilidad1">
+
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".EnviarEmail">
+        </activity>
+        <activity android:name=".TextoVoz">
+        </activity>
+        <activity android:name=".VozTexto">
+        </activity>
+        <activity android:name=".AcercaDe">
+        </activity>
+        <activity android:name=".ReconocimientoVoz">
+        </activity>
+        <activity android:name=".Llamar112">
+        </activity>
+        <activity android:name=".LlamarContacto">
+        </activity>
+        <activity android:name=".SendSmS">
+        </activity>
+        <activity android:name=".Configuracion">
+        </activity>
+
+
+    </application>
+
+</manifest>

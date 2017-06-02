@@ -13,7 +13,8 @@ import android.widget.TextView;
 
 public class MiPerfil extends DialogFragment implements TextView.OnEditorActionListener {
     public static EditText name;
-    private EditText email;
+    public static EditText email;
+    public static EditText pass;
 
 
     public interface NuevoDialogoListener{
@@ -30,11 +31,15 @@ public class MiPerfil extends DialogFragment implements TextView.OnEditorActionL
         View view = inflater.inflate(R.layout.miperfil, container);
         name = (EditText) view.findViewById(R.id.usuario);//queremos conseguir el texto
         email = (EditText) view.findViewById(R.id.email);
+        pass = (EditText)view.findViewById(R.id.pass);
 //creamos una instancia para el escuchador de eventos
         //Cuando haya una modificacion en el EditText.
         name.setOnEditorActionListener(this);
         name.requestFocus(); //recupere el
-
+        email.setOnEditorActionListener(this);
+        email.requestFocus();
+        pass.setOnEditorActionListener(this);
+        pass.requestFocus();
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);//que salga el teclado visible
         getDialog().setTitle("Mi titulo"); //titulo del dialogo
         return view;
@@ -45,7 +50,7 @@ public class MiPerfil extends DialogFragment implements TextView.OnEditorActionL
         NuevoDialogoListener activity =(NuevoDialogoListener) getActivity();
         Object texto;
         activity.FinalizaCuadroDialogo(name.getText().toString());
-        activity.FinalizaCuadroDialogo(email.getText().toString());
+
         this.dismiss();
         return true;
     }
