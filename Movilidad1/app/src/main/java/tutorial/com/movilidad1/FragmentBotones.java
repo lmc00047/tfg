@@ -16,7 +16,7 @@ public class FragmentBotones extends Fragment
     private View mLayout;
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragmentbotones, container, false);
         Button botonllamada = (Button) view.findViewById(R.id.button);
@@ -97,6 +97,8 @@ public class FragmentBotones extends Fragment
         botonRtp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+                ////Escucharmsg();
+                lanzarmicrofono();
 
         }
 
@@ -104,26 +106,21 @@ public class FragmentBotones extends Fragment
 
 
 //
-//  //OnClick Largo del boton emergencias
-//        botonRtp.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View arg0) {
-//
-//                lanzarVozTexto();
-//
-//                return true;
-//            }
-//
-//        });
+//  OnClick Largo del boton emergencias
+       botonRtp.setOnLongClickListener(new View.OnLongClickListener() {
+           @Override
+            public boolean onLongClick(View arg0) {
+
+               lanzarIntercomunicador();
+
+               return true;
+            }
+
+       });
 //-----------------------------------------FIN BOTON AZUL------------------------------------------------//
         return view;
 
     }
-
-
-
-
-
     //Lanzar Activity Reconocimiento de voz
        public void lanzarReconocimiento()
     {
@@ -166,7 +163,18 @@ public class FragmentBotones extends Fragment
         Intent i = new Intent(getContext(), SendSmS.class);
         startActivity(i);
     }
-
+    //Lanzar permiso microfono
+    public void lanzarmicrofono()
+    {
+        Intent i = new Intent(getContext(), PermisoMicrofono.class);
+        startActivity(i);
+    }
+    //Lanzar intercomunicador
+    public void lanzarIntercomunicador()
+    {
+        Intent i = new Intent(getContext(), Intercomunicador.class);
+        startActivity(i);
+    }
 
 }
 

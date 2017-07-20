@@ -54,6 +54,12 @@ public class ReconocimientoVoz extends Activity {
                             startActivity(emergencia);
 
                             break;
+                        case "urgencia":
+
+                            Intent urgencia = new Intent(this.getApplicationContext(), SendSmS.class);
+                            startActivity(urgencia);
+
+                            break;
                         case "112":
 
                             Intent numero = new Intent(this.getApplicationContext(), Llamar112.class);
@@ -61,16 +67,16 @@ public class ReconocimientoVoz extends Activity {
 
                             break;
 
-                        case "Laura":
+                        case "Contacto":
 
-                            Intent laura = new Intent(this.getApplicationContext(), LlamarContacto.class);
-                            startActivity(laura);
+                            Intent contacto = new Intent(this.getApplicationContext(), LlamarContacto.class);
+                            startActivity(contacto);
 
                             break;
-                        case "favorito":
+                        case "cuidador":
 
-                            Intent favorito = new Intent(this.getApplicationContext(), LlamarContacto.class);
-                            startActivity(favorito);
+                            Intent cuidador = new Intent(this.getApplicationContext(), LlamarContacto.class);
+                            startActivity(cuidador);
 
                             break;
                         case "llamar":
@@ -79,24 +85,7 @@ public class ReconocimientoVoz extends Activity {
                             startActivity(llamar);
 
                             break;
-                        case "enviar":
 
-                            Intent enviar = new Intent(this.getApplication(), EnviarEmail.class);
-                            startActivity(enviar);
-
-                            break;
-                        case "email":
-
-                            Intent email = new Intent(this.getApplicationContext(), EnviarEmail.class);
-                            startActivity(email);
-
-                            break;
-                        case "correo":
-
-                            Intent correo = new Intent(this.getApplicationContext(), EnviarEmail.class);
-                            startActivity(correo);
-
-                            break;
                          case "voz":
 
                             Intent voz = new Intent(this.getApplicationContext(), VozTexto.class);
@@ -109,6 +98,7 @@ public class ReconocimientoVoz extends Activity {
                             startActivity(texto);
 
                             break;
+
                        /* case "intercomunicador":
 
                             Intent r = new Intent(this.getApplicationContext(), Intercomunicador.class);

@@ -20,11 +20,11 @@ public class LlamadaDirecta112 extends DialogFragment {
             return fragment;
         }
 
-        public int getEstado ()
+        /*public int getEstado ()
         {
             return this.estadoLlamada;
 
-        }
+        }*/
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {

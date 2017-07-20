@@ -1,7 +1,6 @@
 package tutorial.com.movilidad1;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
@@ -11,42 +10,33 @@ import android.widget.EditText;
 
 import java.util.Locale;
 
-public class TextoVoz extends Activity implements TextToSpeech.OnInitListener {
+public class TextoVozSMS extends Activity implements TextToSpeech.OnInitListener {
 
     private TextToSpeech tts;
     public static EditText etx;
     private Button btn;
-    private Button btn1;
+    MessageReceiver cadena =new MessageReceiver();
+    public String textoSiri;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.siri);
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.siri4);
 
-        tts = new TextToSpeech(this, this);
-        etx = (EditText) findViewById(R.id.etxescribir);
-        btn = (Button) findViewById(R.id.btnreproducir);
-        btn1 = (Button) findViewById(R.id.btnenviar);
+            tts = new TextToSpeech(this, this);
+            etx = (EditText) findViewById(R.id.etxescribir);
+            btn = (Button) findViewById(R.id.btnreproducir);
+
+
+        etx.setText(cadena.str.toString());
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 speakOut();
             }
-
         });
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LanzarEmail();
-            }
-
-        });
-
-
-
     }
-
 
     @Override
     public void onInit(int status) {
@@ -62,23 +52,15 @@ public class TextoVoz extends Activity implements TextToSpeech.OnInitListener {
         } else {
             Log.e("TTS", "Inicialización del lenguaje es fallida");
         }
-
-
     }
 
     private void speakOut() {
         String text = etx.getText().toString();
-        tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+        tts.speak(cadena.str, TextToSpeech.QUEUE_FLUSH, null);
     }
 
 
-    //Lanzar Activity Enviar Email
 
-    public void LanzarEmail() {
-        Intent i = new Intent(this.getApplicationContext(), EnviarEmail.class);
-        i.putExtra("Siri", etx.getText().toString());
-        startActivity(i);
-    }
 
 
 

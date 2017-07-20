@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#DF0101"
+    android:background="@color/colorPrimary"
     android:textColorHint="#FFFFFF"
     tools:context="tutorial.com.movilidad1.EnviarEmail"
     android:weightSum="1">

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_blue_light"
+    android:background="@color/colorPrimary"
     android:orientation="vertical">
 
     <Button
@@ -13,7 +13,7 @@
         android:background="@drawable/redondear4"
         android:text="@string/llamada112"
         android:textColor="#FFFFFF"
-        android:textSize="15dp"
+        android:textSize="18dp"
         android:textStyle="bold"
 
         />
@@ -39,8 +39,7 @@
         android:background="@drawable/redondear4"
         android:text="@string/msgsms"
         android:textColor="#FFFFFF"
-
-        android:textSize="15dp"
+        android:textSize="18dp"
         android:textStyle="bold" />
 
     <Button
@@ -52,7 +51,7 @@
         android:background="@drawable/redondear4"
         android:text="@string/perfil"
         android:textColor="#FFFFFF"
-        android:textSize="15dp"
+        android:textSize="18dp"
         android:textStyle="bold" />
 
 </LinearLayout>

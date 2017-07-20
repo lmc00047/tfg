@@ -6,11 +6,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.SmsManager;
 import android.view.View;
@@ -32,7 +30,10 @@ public class SendSmS extends Activity {
     ProgressDialog pdialog;
     Context context;
     static String rec, subject, textMessage, textoSiri;
+    private EditText emailcuidador;
+    public static int writePermission;
 
+    EnviarSmsoEmail estadoEmail = new EnviarSmsoEmail();
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -48,23 +49,40 @@ public class SendSmS extends Activity {
         //WRITE_EXTERNAL_STORAGE tiene implícito READ_EXTERNAL_STORAGE porque pertenecen al mismo
         //grupo de permisos
 
-        int writePermission = checkSelfPermission(Manifest.permission.SEND_SMS);
+        writePermission = checkSelfPermission(Manifest.permission.SEND_SMS);
+
+        writePermission = 5668;
 
         if (writePermission != PackageManager.PERMISSION_GRANTED) {
+
             requestPermission();
+
         } else {
             try {
-                SmsManager smsManager = SmsManager.getDefault();
-                smsManager.sendTextMessage("112", null, "Hola soy "+MiPerfil.name.getText().toString()+" y tengo una urgencia", null, null);
-                Toast.makeText(getApplicationContext(), "SMS enviado", Toast.LENGTH_LONG).show();
+                if(MiPerfil.name.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(),R.string.errorsMs, Toast.LENGTH_LONG).show();
+                    Intent cuidador = new Intent(this.getApplicationContext(), Configuracion.class);
+                    startActivity(cuidador);
 
-                EnviarEmail send = new EnviarEmail();
-                send.EnviarEmail("apptfglaura@gmail.com","Emergencia","Hola soy "+MiPerfil.name.getText().toString()+" y tengo una urgencia");
+                }else
+                    {
+                    SmsManager smsManager = SmsManager.getDefault();
+                    smsManager.sendTextMessage("112", null, "Hola soy " + MiPerfil.name.getText().toString() + " y tengo una urgencia", null, null);
+                    Toast.makeText(getApplicationContext(), "SMS enviado", Toast.LENGTH_LONG).show();
+
+
+                    if (EnviarSmsoEmail.estadoEmail == 1) {
+
+                        EnviarEmail send = new EnviarEmail();
+                        send.EnviarEmail(MiPerfil.emailcuidador.getText().toString(), "Emergencia", "Hola soy " + MiPerfil.name.getText().toString() + " y tengo una urgencia");
+                    }
+                }
             } catch (Exception e) {
-
-
-                Toast.makeText(getApplicationContext(), "ERROR SMS. Para poder enviar SMS hay que establecer un nombre en configuración.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),R.string.errorsMs, Toast.LENGTH_LONG).show();
+                Intent cuidador = new Intent(this.getApplicationContext(), Configuracion.class);
+                startActivity(cuidador);
             }
+
         }
     }
 
@@ -76,7 +94,10 @@ public class SendSmS extends Activity {
         //anteriormente el dialogo de permisos y el usuario lo negó
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.SEND_SMS)) {
-            showSnackBar();
+            //showSnackBar();
+            Toast.makeText(getApplicationContext(), R.string.permiso, Toast.LENGTH_LONG).show();
+            requestPermissions(new String[]{Manifest.permission.SEND_SMS},
+                    MY_WRITE_EXTERNAL_STORAGE);
         } else {
             //si es la primera vez se solicita el permiso directamente
             requestPermissions(new String[]{Manifest.permission.SEND_SMS},
@@ -93,86 +114,52 @@ public class SendSmS extends Activity {
         //la respuesta del usuario fue positiva
         if (requestCode == MY_WRITE_EXTERNAL_STORAGE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //saveComments();
                 try {
-                    SmsManager smsManager = SmsManager.getDefault();
-                    smsManager.sendTextMessage("112", null, "Hola soy "+MiPerfil.name.getText().toString()+" y tengo una urgencia", null, null);
-                    Toast.makeText(getApplicationContext(), "SMS enviado", Toast.LENGTH_LONG).show();
 
-                    //if(EnviarSmsoEmail.estadoEmail==1)
-                    //{
-                        EnviarEmail.rec =MiPerfil.email.getText().toString();
-                        EnviarEmail.subject = "Emergencia";
-                        context=this;
-                        Properties props = new Properties();
-                        props.put("mail.smtp.host", "smtp.gmail.com");
-                        props.put("mail.smtp.socketFactory.port", "465");
-                        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-                        props.put("mail.smtp.auth", "true");
-                        props.put("mail.smtp.port", "465");
-                        session = Session.getDefaultInstance(props, new Authenticator() {
-                            protected PasswordAuthentication getPasswordAuthentication() {
-                                return new PasswordAuthentication(MiPerfil.email.getText().toString(), MiPerfil.pass.getText().toString());
-                            }
-                        });
+                    if(MiPerfil.name.getText().toString().equals("")){
+                        Toast.makeText(getApplicationContext(), R.string.errorsMs, Toast.LENGTH_LONG).show();
+                        Intent cuidador = new Intent(this.getApplicationContext(), Configuracion.class);
+                        startActivity(cuidador);
 
-                        pdialog = ProgressDialog.show(context, "", "Enviando Email...", true);
-
-                        EnviarEmail.RetreiveFeedTask task = new EnviarEmail.RetreiveFeedTask();
-                    Toast.makeText(context, "SMS Sergio", Toast.LENGTH_LONG).show();
-                        task.execute();
-                   // }
+                    }else {
+                        SmsManager smsManager = SmsManager.getDefault();
+                        smsManager.sendTextMessage("112", null, "Hola soy " + MiPerfil.name.getText().toString() + " y tengo una urgencia", null, null);
+                        Toast.makeText(getApplicationContext(), "SMS enviado", Toast.LENGTH_LONG).show();
 
 
+                        if (EnviarSmsoEmail.estadoEmail == 1) {
+                            EnviarEmail.rec = MiPerfil.email.getText().toString();
+                            EnviarEmail.subject = "Emergencia";
+                            context = this;
+                            Properties props = new Properties();
+                            props.put("mail.smtp.host", "smtp.gmail.com");
+                            props.put("mail.smtp.socketFactory.port", "465");
+                            props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+                            props.put("mail.smtp.auth", "true");
+                            props.put("mail.smtp.port", "465");
+                            session = Session.getDefaultInstance(props, new Authenticator() {
+                                protected PasswordAuthentication getPasswordAuthentication() {
+                                    return new PasswordAuthentication(MiPerfil.email.getText().toString(), MiPerfil.pass.getText().toString());
+                                }
+                            });
 
-
-
-
-
-
+                            pdialog = ProgressDialog.show(context, "", "Enviando Email...", true);
+                            EnviarEmail.RetreiveFeedTask task = new EnviarEmail.RetreiveFeedTask();
+                            task.execute();
+                        }
+                    }
 
                 } catch (Exception e) {
-
-
-                    Toast.makeText(getApplicationContext(), "ERROR SMS. Para poder enviar SMS hay que establecer un nombre en configuración.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.errorsMs, Toast.LENGTH_LONG).show();
+                    Intent cuidador = new Intent(this.getApplicationContext(), Configuracion.class);
+                    startActivity(cuidador);
                 }
 
             } else {
-                showSnackBar();
+                Toast.makeText(getApplicationContext(), R.string.permiso, Toast.LENGTH_LONG).show();
+
             }
         }
     }
-
-
-    /**
-     * Método para mostrar el snackbar de la aplicación.
-     * Snackbar es un componente de la librería de diseño 'com.android.support:design:23.1.0'
-     * y puede ser personalizado para realizar una acción, como por ejemplo abrir la actividad de
-     * configuración de nuestra aplicación.
-     */
-    private void showSnackBar() {
-        Snackbar.make(mLayout, R.string.permission_sms_send,
-                Snackbar.LENGTH_LONG)
-                .setAction(R.string.settings, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        openSettings();
-                    }
-                })
-                .show();
-    }
-
-    /**
-     * Abre el intento de detalles de configuración de nuestra aplicación
-     */
-    public void openSettings() {
-        Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        intent.setData(Uri.parse("package:" + getPackageName()));
-        startActivity(intent);
-    }
-
-
-
-
 
 }

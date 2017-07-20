@@ -1,49 +1,43 @@
 package tutorial.com.movilidad1;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.EditText;
 
-public class Llamar112 extends Activity {
+public class Llamar112 extends AppCompatActivity {
 
     LlamadaDirecta112 estado = new LlamadaDirecta112();
 
+    private EditText tlfcuidador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 
-        if (estado.getEstado() == 1) {
-            /*Toast.makeText(getApplicationContext(),"oleeeeeeeeeeeeeee",Toast.LENGTH_SHORT).show();
-            Intent in=new Intent(Intent.ACTION_CALL,Uri.parse("610369910"));
-            try{
-                startActivity(in);
-            }
-
-            catch (android.content.ActivityNotFoundException ex){
-                Toast.makeText(getApplicationContext(),"yourActivity is not founded",Toast.LENGTH_SHORT).show();
-            }*/
+        if (LlamadaDirecta112.estadoLlamada==1) {
 
             Intent callIntent = new Intent(Intent.ACTION_CALL);
-            callIntent.setData(Uri.parse("tel:0377778888"));
+            callIntent.setData(Uri.parse("tel:3135165"));
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
 
-            if (ActivityCompat.checkSelfPermission(this,
-                    Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                return;
+
+                          return;
             }
             startActivity(callIntent);
 
 
-        }
+
+            }
+
+
+
         else {
-           // Toast.makeText(this, "OLEEEE222222", Toast.LENGTH_SHORT).show();
-
-
             Intent llamar112 = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:112"));
             llamar112.setData(Uri.parse("tel:112"));
             startActivity(llamar112);

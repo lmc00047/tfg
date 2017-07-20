@@ -5,7 +5,7 @@
 
     <item
         android:id="@+id/microfono"
-        android:icon="@mipmap/micro1"
+        android:icon="@drawable/micro"
         android:title="@string/reconocimiento"
         app:showAsAction="always" />
 

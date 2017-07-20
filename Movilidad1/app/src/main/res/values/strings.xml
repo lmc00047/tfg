@@ -18,7 +18,7 @@
     <string name="acercade">Esta aplicación ha sido realizada por Laura Moreno Chicharro. Permite facilitar las acciones de comunicación más importantes y comunes a personas con movilidad reducida o muy reducida.</string>
     <string name="cuadrollamada">¿Quiere que se haga automáticamente la llamada a emergencias?</string>
     <string name="salir"> </string>
-    <string name="llamada112">Llamada automática 112</string>
+    <string name="llamada112">Llamada automática</string>
     <string name="msgsms">Enviar email o Sms</string>
     <string name="leersms">¿Quiere escuchar sus mensajes?</string>
     <string name="no">No </string>
@@ -31,12 +31,42 @@
     <string name="asunto">Asunto:</string>
     <string name="to">Para:</string>
     <string name="escribemensaje">Escribe el mensaje</string>
-    <string name="reproducir">Escribe el texto para reproducir...</string>
-    <string name="hablar">Click en el microfono para hablar</string>
+    <string name="reproducir">Escribe el texto...</string>
+    <string name="hablar">Texto...</string>
     <string name="nombre">Nombre</string>
     <string name="user">Mi perfil                                                      </string>
     <string name="correo">Email</string>
  <string name="pass">Contraseña email</string>
+ <string name="correocuidador">Email del cuidador</string>
+ <string name="telefono">Teléfono del cuidador</string>
+ <string name="nameuser">Nombre de usuario</string>
+ <string name="emailsusu">Email del usuario</string>
+ <string name="passusu">Contraseña email usuario</string>
+ <string name="emaildir">Email usuario</string>
+ <string name="emailcui">Email del cuidador</string>
+ <string name="tlfcui">Teléfono del cuidador</string>
+ <string name="Reproducir">Reproducir</string>
+ <string name="Enviaremail">Enviar email</string>
+ <string name="Hablar">Hablar</string>
+ <string name="permission_call_phone">¿Permite a esta aplicación  realizar llamadas?</string>
+ <string name="permission_internet">¿Permitir a esta aplicación acceder a Internet?</string>
+ <string name="errormicro">ERROR MICRÓFONO. Para poder utilizar el micrófono se han de aceptar los permisos.</string>
+ <string name="errorsMs">ERROR SMS. Para poder enviar SMS hay que establecer un nombre en configuración.</string>
+ <string name="emergencia">Emergencia</string>
+ <string name="permiso">No se puede realizar esta acción si no se aceptan los permisos</string>
+ <string name="errorllamada">Para poder llamar al cuidador hay que establecer el número de telefono en configuración.</string>
+ <string name="ip">Dirección IP cuidador</string>
+ <string name="clave">Contraseña de conexión</string>
+ <string name="guardar">GUARDAR</string>
+    <string name="politica">POLÍTICA DE PRIVACIDAD</string>
+    <string name="text1">El presente Política de Privacidad establece los términos en que Movilidad Reducida usa y protege la información que es proporcionada por sus usuarios al momento de utilizar su aplicación móvil. Esta compañía está comprometida con la seguridad de los datos de sus usuarios. Cuando le pedimos llenar los campos de información personal con la cual usted pueda ser identificado, lo hacemos asegurando que sólo se empleará de acuerdo con los términos de este documento. Sin embargo esta Política de Privacidad puede cambiar con el tiempo o ser actualizada por lo que le recomendamos y enfatizamos revisar continuamente esta página para asegurarse que está de acuerdo con dichos cambios.</string>
+ <string name="informacion">Información que es recogida</string>
+ <string name="text3">Nuestra aplicación podrá recoger información personal por ejemplo: nombre, correo electrónico y contraseña, así como datos de su cuidador.  Nuestra aplicación emplea la información con el fin de proporcionar el mejor servicio posible, particularmente para mantener un registro de usuarios, poder enviar mensajes con los datos correctos y realizar llamadas a las personas indicadas.  Movilidad reducida está altamente comprometido para cumplir con el compromiso de mantener su información segura. Usamos los sistemas más avanzados y los actualizamos constantemente para asegurarnos que no exista ningún acceso no autorizado.</string>
+ <string name="control">Control de su información personal</string>
+ <string name="text4">En cualquier momento usted puede restringir la recopilación o el uso de la información personal que es proporcionada a nuestra aplicación, sabiendo que sin esa información gran parte de las funciones de dicha aplicación no serán realizadas correctamente. Esta compañía no venderá, cederá ni distribuirá la información personal que es recopilada sin su consentimiento, salvo que sea requerido por un juez con un orden judicial. Movilidad Reducida se reserva el derecho de cambiar los términos de la presente Política de Privacidad en cualquier momento.</string>
+    <string name="politica2">Términos y Política de Privacidad</string>
+    <string name="start">START</string>
+ <string name="stop">STOP</string>
 
 
 </resources>

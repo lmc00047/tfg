@@ -5,19 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="tutorial.com.movilidad1.MainActivity"
-    android:background="@android:color/holo_blue_light">
+    android:background="@color/colorPrimary">
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/button6"
         android:background="@drawable/buttonarriba"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
 
         android:textColor="@android:color/background_light"
         android:textStyle="normal|bold"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp" />
 
     <fragment
         android:id="@+id/fragment4"

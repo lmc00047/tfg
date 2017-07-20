@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/colorPrimary"
+    android:layout_height="match_parent"
+    tools:context=".Intercomunicador">
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ip destino"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        tools:layout_editor_absoluteX="25dp"
+        tools:layout_editor_absoluteY="33dp"
+        android:layout_alignBaseline="@+id/editText"
+        android:layout_alignBottom="@+id/editText"
+        android:layout_toLeftOf="@+id/buttonPlay"
+        android:layout_toStartOf="@+id/buttonPlay"
+        android:layout_marginRight="35dp"
+        android:layout_marginEnd="35dp" />
+
+    <EditText
+        android:layout_width="500dp"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteY="16dp"
+        tools:layout_editor_absoluteX="133dp"
+        android:id="@+id/editText"
+        android:textColorHint="#FFFFFF"
+        android:layout_marginTop="61dp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/textView"
+        android:layout_toEndOf="@+id/textView" />
+
+    <Button
+        android:id="@+id/buttonPlay"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="148dp"
+        android:background="@drawable/intercomunicador"
+        android:text="@string/start"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="126dp"
+        tools:layout_editor_absoluteY="150dp" />
+</RelativeLayout>

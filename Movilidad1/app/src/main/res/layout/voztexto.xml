@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#8904B1"
+    android:background="@color/colorPrimary"
     tools:context="tutorial.com.movilidad1.VozTexto">
 
     <ImageButton
@@ -16,22 +16,44 @@
         android:layout_marginBottom="29dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
-
     <TextView
-        android:layout_width="match_parent"
-        android:background="@drawable/redondear2"
+        android:text="@string/Enviaremail"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+        android:layout_marginRight="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_alignBottom="@+id/btnenviar"
+        android:layout_toLeftOf="@+id/btnenviar"
+        android:layout_toStartOf="@+id/btnenviar" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text= "Hablar"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="17dp"
+        android:layout_above="@+id/img_btn_hablar"
+        android:layout_centerHorizontal="true" />
+    <TextView
+        android:layout_width="275dp"
+        android:background="@drawable/redondear1"
+
         android:hint="@string/hablar"
         android:textStyle="bold"
         android:textColorHint="#FFFFFF"
         android:textColor="#FFFFFF"
-
         android:layout_height="wrap_content"
         android:id="@+id/txtGrabarVoz"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:phoneNumber="false"
-        android:textSize="18dp" />
+        android:textSize="30dp"
+        android:layout_marginTop="33dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/btnenviar"
@@ -39,9 +61,9 @@
         android:layout_height="40dp"
         android:background="@drawable/enviar"
         android:layout_weight="0.04"
-        android:layout_marginRight="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="27dp"
+        android:layout_marginRight="17dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginTop="33dp"
         android:layout_below="@+id/txtGrabarVoz"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />

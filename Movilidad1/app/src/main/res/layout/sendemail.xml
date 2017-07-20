@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
        xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#DF0101"
+    android:background="@color/colorPrimary"
     android:textColorHint="#FFFFFF"
     tools:context="tutorial.com.movilidad1.EnviarEmail"
     android:weightSum="1">
@@ -22,18 +22,17 @@
         android:padding="16dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:layout_width="match_parent"
-        android:layout_marginTop="5dp"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="11dp" />
 
     <EditText
         android:id="@+id/et_sub"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/et_to"
         android:textStyle="bold"
-        android:layout_marginTop="5dp"
         android:background="@drawable/redondear1"
         android:ems="10"
         android:gravity="top|start"
@@ -42,15 +41,16 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF"
-        android:textSize="25sp" />
+        android:textSize="25sp"
+        android:layout_below="@+id/et_to"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="11dp" />
 
     <EditText
         android:id="@+id/et_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/et_sub"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:ems="10"
         android:hint="@string/escribemensaje"
         android:padding="16dp"
@@ -61,7 +61,10 @@
         android:inputType="textPostalAddress"
         android:textColorHighlight="#FFFFD4"
         android:textColorHint="#FFFFFF"
-        android:textSize="25sp" />
+        android:textSize="25sp"
+        android:layout_below="@+id/et_sub"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <Button
 
@@ -69,10 +72,15 @@
         android:layout_width="41dp"
         android:layout_height="37dp"
         android:layout_gravity="end"
-        android:layout_marginTop="5dip"
+        android:layout_marginTop="21dp"
         android:layout_weight="0.03"
-        android:background="@drawable/enviar" />
-</LinearLayout>
+        android:background="@drawable/enviar"
+        android:layout_marginRight="37dp"
+        android:layout_marginEnd="37dp"
+        android:layout_below="@+id/et_text"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>
 
 
 

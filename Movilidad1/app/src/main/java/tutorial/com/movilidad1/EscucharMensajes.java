@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
 public class EscucharMensajes extends DialogFragment {
+    public static int estadoEscuchar;
+
     static EscucharMensajes newInstance(String title) {
         EscucharMensajes fragment = new EscucharMensajes();
         Bundle args = new Bundle();
@@ -36,6 +38,7 @@ public class EscucharMensajes extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // TODO Auto-generated method stub
+                        EscucharMensajes.this.estadoEscuchar = 1;
                         ((Configuracion) getActivity()).doNegativeClick();
                     }
                 })
