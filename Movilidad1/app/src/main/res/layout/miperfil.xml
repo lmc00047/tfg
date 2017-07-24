@@ -207,16 +207,23 @@
                 android:textColor="#FFFFFF"
                 android:textColorHint="#FFFFFF"/>
 
-
             <Button
                 android:id="@+id/botonpolitica"
                 android:layout_width="wrap_content"
                 android:layout_height="12dp"
                 android:layout_margin="10dp"
-                android:textSize="10dp"
                 android:background="@color/colorAccent"
+                android:scrollHorizontally="false"
+                android:text="@string/politica2"
                 android:textColor="@color/colorPrimaryDark"
-                android:text="@string/politica2" />
+                android:textSize="10dp" />
+            <CheckBox
+                android:id="@+id/check"
+                android:textColor="#FFFFFF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10dp"
+                android:text="@string/aceptPolitica" />
 
             <Button
                 android:id="@+id/guardar"
@@ -224,7 +231,7 @@
                 android:layout_height="50dp"
                 android:layout_marginEnd="18dp"
                 android:layout_marginRight="18dp"
-                android:background="@drawable/guardar"
+                android:background="@drawable/botonguardar"
                android:layout_gravity="end"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"

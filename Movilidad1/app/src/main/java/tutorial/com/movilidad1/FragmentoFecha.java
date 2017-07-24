@@ -15,7 +15,9 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
+/**
+ * Esta clase es un fragmento en el que su contenido es mostrar la fecha y la hora actual.
+ */
 public class FragmentoFecha extends Fragment
 {
     static Timer timer=null;
@@ -49,15 +51,18 @@ public class FragmentoFecha extends Fragment
     }
 
     @Override
-    public void onPause() {
+    public void onPause()
+    {
         super.onPause();
-        if(timer!=null){
+        if(timer!=null)
+        {
             timer.cancel();
         }
     }
 
     @Override
-    public void onResume() {
+    public void onResume()
+    {
         super.onResume();
 
         //Obtener hora actual y refrescar cada segundo la hora mostrada y la fecha
@@ -81,7 +86,5 @@ public class FragmentoFecha extends Fragment
                 getActivity().runOnUiThread(updateTask);
             }
         }, 1, 1000);
-
-
     }
 }

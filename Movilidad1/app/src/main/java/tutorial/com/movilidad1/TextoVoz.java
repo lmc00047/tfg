@@ -11,6 +11,9 @@ import android.widget.EditText;
 
 import java.util.Locale;
 
+/**
+ * Esta Clase se encarga de convertir el texto en voz, utiliza para ello la clase TextToSpeech.
+ */
 public class TextoVoz extends Activity implements TextToSpeech.OnInitListener {
 
     private TextToSpeech tts;
@@ -19,7 +22,8 @@ public class TextoVoz extends Activity implements TextToSpeech.OnInitListener {
     private Button btn1;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.siri);
 
@@ -42,45 +46,43 @@ public class TextoVoz extends Activity implements TextToSpeech.OnInitListener {
             }
 
         });
-
-
-
     }
 
 
     @Override
-    public void onInit(int status) {
+    public void onInit(int status)
+    {
 
-        if (status == TextToSpeech.SUCCESS) {
+        if (status == TextToSpeech.SUCCESS)
+        {
             int result = tts.setLanguage(Locale.getDefault());
-            if (result == TextToSpeech.LANG_NOT_SUPPORTED || result == TextToSpeech.LANG_MISSING_DATA) {
+            if (result == TextToSpeech.LANG_NOT_SUPPORTED || result == TextToSpeech.LANG_MISSING_DATA)
+            {
                 Log.e("TTS", "Este lenguaje no es soportado");
-            } else {
+            } else
+                {
                 btn.setEnabled(true);
                 speakOut();
-            }
-        } else {
+                }
+        } else
+            {
             Log.e("TTS", "Inicialización del lenguaje es fallida");
-        }
-
-
+            }
     }
 
-    private void speakOut() {
+    private void speakOut()
+    {
         String text = etx.getText().toString();
         tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
     }
 
-
     //Lanzar Activity Enviar Email
 
-    public void LanzarEmail() {
+    public void LanzarEmail()
+    {
         Intent i = new Intent(this.getApplicationContext(), EnviarEmail.class);
         i.putExtra("Siri", etx.getText().toString());
         startActivity(i);
     }
-
-
-
-    }
+}
 

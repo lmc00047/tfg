@@ -20,7 +20,7 @@
     <string name="salir"> </string>
     <string name="llamada112">Llamada automática</string>
     <string name="msgsms">Enviar email o Sms</string>
-    <string name="leersms">¿Quiere escuchar sus mensajes?</string>
+    <string name="leersms">Escuchar SMS</string>
     <string name="no">No </string>
     <string name="si">Si </string>
     <string name="sms">Email-SMS</string>
@@ -34,7 +34,7 @@
     <string name="reproducir">Escribe el texto...</string>
     <string name="hablar">Texto...</string>
     <string name="nombre">Nombre</string>
-    <string name="user">Mi perfil                                                      </string>
+    <string name="user">Mi perfil</string>
     <string name="correo">Email</string>
  <string name="pass">Contraseña email</string>
  <string name="correocuidador">Email del cuidador</string>
@@ -67,6 +67,7 @@
     <string name="politica2">Términos y Política de Privacidad</string>
     <string name="start">START</string>
  <string name="stop">STOP</string>
+ <string name="aceptPolitica">He leído y acepto la Politica de Privacidad</string>
 
 
 </resources>

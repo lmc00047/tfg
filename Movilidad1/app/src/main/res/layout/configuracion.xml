@@ -5,6 +5,7 @@
     android:background="@color/colorPrimary"
     android:orientation="vertical">
 
+
     <Button
         android:id="@+id/botonLlamada112"
         android:layout_width="match_parent"
@@ -27,7 +28,7 @@
         android:background="@drawable/redondear4"
         android:text="@string/leersms"
         android:textColor="#FFFFFF"
-        android:textSize="15dp"
+        android:textSize="18dp"
         android:textStyle="bold" />
 
     <Button

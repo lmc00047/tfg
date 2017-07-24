@@ -8,11 +8,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
-
-public class MiPerfil extends DialogFragment implements TextView.OnEditorActionListener {
+/**
+ * Esta clase es la encargada de guardar las variables obtenidas de la vista Mi perfil.
+ * Además de obtener las variables se encarga de guardarlas y así las demás clases puedan
+ * acceder a ellas.
+ */
+public class MiPerfil extends DialogFragment implements TextView.OnEditorActionListener
+{
     public static EditText name;
     public static EditText email;
     public static EditText pass;
@@ -22,20 +28,22 @@ public class MiPerfil extends DialogFragment implements TextView.OnEditorActionL
     public static Button botonGuardar;
     public static TextView politica;
     public static EditText clave;
-    public static String nameS, emailS, passS, emailcuidadorS, tlfcuidadorS;
+    public static CheckBox chec;
+    public static String nameS, emailS, passS, emailcuidadorS, tlfcuidadorS,ipcuidadorS,claveS;
 
 
-    public interface NuevoDialogoListener{
+    public interface NuevoDialogoListener
+    {
         void FinalizaCuadroDialogo(String texto);
     }
-//Constructor requerido para el DiaogFragment
+    //Constructor requerido para el DiaogFragment
     public MiPerfil(){
 
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState)
+    {
         View view = inflater.inflate(R.layout.miperfil, container);
         name = (EditText) view.findViewById(R.id.usuario);//queremos conseguir el texto
         email = (EditText) view.findViewById(R.id.email);
@@ -46,12 +54,14 @@ public class MiPerfil extends DialogFragment implements TextView.OnEditorActionL
         ipcuidador=(EditText)view.findViewById(R.id.DirIp);
         clave= (EditText)view.findViewById(R.id.clave);
         politica = (Button) view.findViewById(R.id.botonpolitica);
+        chec= (CheckBox)view.findViewById(R.id.check);
 
 
         //creamos una instancia para el escuchador de eventos
-        //Cuando haya una modificacion en el EditText.
-        tlfcuidador.setOnEditorActionListener(this);
-        tlfcuidador.requestFocus(); //dónde se pone el cursor cuando lo abres
+        //Cuando haya una modificación en el EditText.
+        name.setOnEditorActionListener(this);
+        //El puntero aparece en el nombre de usuario
+        name.requestFocus();
 
 
         botonGuardar.setOnClickListener(new View.OnClickListener() {
@@ -63,10 +73,12 @@ public class MiPerfil extends DialogFragment implements TextView.OnEditorActionL
                 passS = pass.getText().toString();
                 emailcuidadorS = emailcuidador.getText().toString();
                 tlfcuidadorS = tlfcuidador.getText().toString();
-
+                ipcuidadorS = ipcuidador.getText().toString();
+                claveS = clave.getText().toString();
             }
 
         });
+
         politica.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View arg0){
@@ -80,20 +92,20 @@ public class MiPerfil extends DialogFragment implements TextView.OnEditorActionL
         pass.setText(passS);
         emailcuidador.setText(emailcuidadorS);
         tlfcuidador.setText(tlfcuidadorS);
+        clave.setText(claveS);
+        ipcuidador.setText(ipcuidadorS);
 
-
-        //getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);//que salga el teclado visible
         getDialog().setTitle("Mi titulo"); //titulo del dialogo
         return view;
-
-
     }
 
     @Override
-    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+    {
         NuevoDialogoListener activity =(NuevoDialogoListener) getActivity();
         Object texto;
-        activity.FinalizaCuadroDialogo(name.getText().toString());//Toast nombre usuario
+        //Aparece el nombre de usuario por pantalla
+        activity.FinalizaCuadroDialogo(name.getText().toString());
         this.dismiss();
         return true;
     }

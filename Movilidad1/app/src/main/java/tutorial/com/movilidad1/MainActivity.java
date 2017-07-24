@@ -21,13 +21,15 @@ import android.widget.Toast;
 
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
+public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener
+{
     //Declaración de variables
     private View mLayout;
     public View microfono;
     protected PowerManager.WakeLock wakelock; //Pantalla siempre activa
     private static final int MY_WRITE_EXTERNAL_STORAGE = 0;
     int aux = 0;
+    public static int auxConexion = 0;
     public Thread sms;
     public static int aux_sms = 0;
     public static String mensaje = "";
@@ -35,36 +37,35 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mLayout = findViewById(R.id.fragmentbotones);
         microfono = findViewById(R.id.microfono);
         tts = new TextToSpeech(this, this);
-
-        button_start();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); //pantalla activa
 
-        // if (aux == 0) {
-        requestPermission();
-        requestPermissionLlamada();
-        requestPermissionMicrofono();
+        nuevoHiloServidor();
 
+
+        button_start();
 
         //Si es la primera vez que se instala la aplicación, entonces muestra el cuadro de dialogo del perfil
-        switch (getFirstTimeRun()) {
+        switch (getFirstTimeRun())
+        {
             case 0:
-
                 dialogoPersonalizado();
+                requestPermission();
+                requestPermissionLlamada();
+                requestPermissionMicrofono();
                 break;
-
         }
-
-
     }
 
     //Método para saber si ha sido la primera vez que se ha instalado la aplicación o no.
-    private int getFirstTimeRun() {
+    private int getFirstTimeRun()
+    {
         SharedPreferences sp = getSharedPreferences("MYAPP", 0);
         int result, currentVersionCode = BuildConfig.VERSION_CODE;
         int lastVersionCode = sp.getInt("FIRSTTIMERUN", -1);
@@ -76,47 +77,45 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     }
 
-    public void onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+    public void onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         microfono.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-
             }
-
         });
-
-
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         getMenuInflater().inflate(R.menu.menuopciones, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         int id = item.getItemId();
 
-        if (id == R.id.microfono) {
+        if (id == R.id.microfono)
+        {
             Toast.makeText(this, R.string.reconocimiento, Toast.LENGTH_LONG).show();
-
             Intent i = new Intent(getApplicationContext(), ReconocimientoVoz.class);
             startActivity(i);
-
             return true;
         }
 
-        if (id == R.id.configuracion) {
+        if (id == R.id.configuracion)
+        {
             Toast.makeText(this, R.string.configuracion, Toast.LENGTH_LONG).show();
             Intent j = new Intent(getApplicationContext(), Configuracion.class);
             startActivity(j);
-
             return true;
         }
 
-        if (id == R.id.acercade) {
+        if (id == R.id.acercade)
+        {
             Toast.makeText(this, R.string.acerca, Toast.LENGTH_LONG).show();
             Intent i = new Intent(getApplicationContext(), AcercaDe.class);
             startActivity(i);
@@ -126,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     }
 
     //********************************Permiso Sms**************************************************
-    //Paso 2: Solicitar permiso
+   //Paso 2: Solicitar permiso
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void requestPermission() {
         //shouldShowRequestPermissionRationale es verdadero solamente si ya se había mostrado
@@ -187,10 +186,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             public void run() {
 
                 while (true){
-                    //Toast.makeText(getApplicationContext(),"holaaaaaaaaaaaa",Toast.LENGTH_SHORT).show();
                    if( aux_sms == 1){
-                       //Intent i = new Intent(getApplicationContext(),TextoVozSMS.class);
-                       //startActivity(i);
                        tts.speak(mensaje, TextToSpeech.QUEUE_FLUSH, null);
                    }
                 }
@@ -198,6 +194,11 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         });
 
         sms.start();
+    }
+
+    public void nuevoHiloServidor(){
+        hiloServidor nuevoHilo = new hiloServidor();
+         nuevoHilo.start();
     }
 
     @Override
@@ -219,6 +220,9 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         String text = MessageReceiver.str;
         tts.speak(mensaje, TextToSpeech.QUEUE_FLUSH, null);
     }
+
+
+
 }
 
 

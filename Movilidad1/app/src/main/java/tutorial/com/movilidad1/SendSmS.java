@@ -21,8 +21,14 @@ import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 
-public class SendSmS extends Activity {
+/**
+ * Actividad encargada de enviar SMS a emergencias. También permite el envío de un email al cuidador si está activada la opción
+ * SMS-Email en la sección Mi perfil.
+ * Además contiene el permiso para poder enviar SMS
+ */
 
+public class SendSmS extends Activity
+{
     private static final int MY_WRITE_EXTERNAL_STORAGE = 0;
     private View mLayout;
     private EditText name;
@@ -37,29 +43,32 @@ public class SendSmS extends Activity {
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         verifyPermission();
     }
 
     //Paso 1. Verificar permiso
     @RequiresApi(api = Build.VERSION_CODES.M)
-    private void verifyPermission() {
-
+    private void verifyPermission()
+    {
         //WRITE_EXTERNAL_STORAGE tiene implícito READ_EXTERNAL_STORAGE porque pertenecen al mismo
         //grupo de permisos
 
         writePermission = checkSelfPermission(Manifest.permission.SEND_SMS);
-
         writePermission = 5668;
 
-        if (writePermission != PackageManager.PERMISSION_GRANTED) {
-
+        if (writePermission != PackageManager.PERMISSION_GRANTED)
+        {
             requestPermission();
 
-        } else {
-            try {
-                if(MiPerfil.name.getText().toString().equals("")){
+        } else
+            {
+            try
+            {
+                if(MiPerfil.name.getText().toString().equals(""))
+                {
                     Toast.makeText(getApplicationContext(),R.string.errorsMs, Toast.LENGTH_LONG).show();
                     Intent cuidador = new Intent(this.getApplicationContext(), Configuracion.class);
                     startActivity(cuidador);
@@ -70,64 +79,71 @@ public class SendSmS extends Activity {
                     smsManager.sendTextMessage("112", null, "Hola soy " + MiPerfil.name.getText().toString() + " y tengo una urgencia", null, null);
                     Toast.makeText(getApplicationContext(), "SMS enviado", Toast.LENGTH_LONG).show();
 
-
-                    if (EnviarSmsoEmail.estadoEmail == 1) {
-
+                    if (EnviarSmsoEmail.estadoEmail == 1)
+                    {
                         EnviarEmail send = new EnviarEmail();
                         send.EnviarEmail(MiPerfil.emailcuidador.getText().toString(), "Emergencia", "Hola soy " + MiPerfil.name.getText().toString() + " y tengo una urgencia");
                     }
                 }
-            } catch (Exception e) {
+            } catch (Exception e)
+            {
                 Toast.makeText(getApplicationContext(),R.string.errorsMs, Toast.LENGTH_LONG).show();
                 Intent cuidador = new Intent(this.getApplicationContext(), Configuracion.class);
                 startActivity(cuidador);
             }
-
         }
     }
 
 
     //Paso 2: Solicitar permiso
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public void requestPermission() {
+    public void requestPermission()
+    {
         //shouldShowRequestPermissionRationale es verdadero solamente si ya se había mostrado
         //anteriormente el dialogo de permisos y el usuario lo negó
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                Manifest.permission.SEND_SMS)) {
-            //showSnackBar();
+                Manifest.permission.SEND_SMS))
+        {
             Toast.makeText(getApplicationContext(), R.string.permiso, Toast.LENGTH_LONG).show();
             requestPermissions(new String[]{Manifest.permission.SEND_SMS},
                     MY_WRITE_EXTERNAL_STORAGE);
-        } else {
+        } else
+            {
             //si es la primera vez se solicita el permiso directamente
             requestPermissions(new String[]{Manifest.permission.SEND_SMS},
                     MY_WRITE_EXTERNAL_STORAGE);
-        }
+            }
     }
 
     //Paso 3: Procesar respuesta de usuario
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
+    {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         //Si el requestCode corresponde al que usamos para solicitar el permiso y
         //la respuesta del usuario fue positiva
-        if (requestCode == MY_WRITE_EXTERNAL_STORAGE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (requestCode == MY_WRITE_EXTERNAL_STORAGE)
+        {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
                 try {
 
-                    if(MiPerfil.name.getText().toString().equals("")){
+                    if(MiPerfil.name.getText().toString().equals(""))
+                    {
                         Toast.makeText(getApplicationContext(), R.string.errorsMs, Toast.LENGTH_LONG).show();
                         Intent cuidador = new Intent(this.getApplicationContext(), Configuracion.class);
                         startActivity(cuidador);
 
-                    }else {
+                    }else
+                        {
                         SmsManager smsManager = SmsManager.getDefault();
                         smsManager.sendTextMessage("112", null, "Hola soy " + MiPerfil.name.getText().toString() + " y tengo una urgencia", null, null);
                         Toast.makeText(getApplicationContext(), "SMS enviado", Toast.LENGTH_LONG).show();
 
 
-                        if (EnviarSmsoEmail.estadoEmail == 1) {
+                        if (EnviarSmsoEmail.estadoEmail == 1)
+                        {
                             EnviarEmail.rec = MiPerfil.email.getText().toString();
                             EnviarEmail.subject = "Emergencia";
                             context = this;
@@ -149,17 +165,17 @@ public class SendSmS extends Activity {
                         }
                     }
 
-                } catch (Exception e) {
+                } catch (Exception e)
+                {
                     Toast.makeText(getApplicationContext(), R.string.errorsMs, Toast.LENGTH_LONG).show();
                     Intent cuidador = new Intent(this.getApplicationContext(), Configuracion.class);
                     startActivity(cuidador);
                 }
 
-            } else {
+            } else
+                {
                 Toast.makeText(getApplicationContext(), R.string.permiso, Toast.LENGTH_LONG).show();
-
             }
         }
     }
-
 }

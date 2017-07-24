@@ -12,14 +12,19 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class VozTexto extends Activity {
-    private Button btn1;
-   TextView grabar;
+/**
+ * Se encarga de convertir la voz en texto, utilizando el API de google.
+ */
+public class VozTexto extends Activity
+{
 
-   private static final int RECOGNIZE_SPEECH_ACTIVITY = 1;
+    private Button btn1;
+    TextView grabar;
+    private static final int RECOGNIZE_SPEECH_ACTIVITY = 1;
 
    @Override
-   protected void onCreate(Bundle savedInstanceState) {
+   protected void onCreate(Bundle savedInstanceState)
+   {
        super.onCreate(savedInstanceState);
        setContentView(R.layout.voztexto);
        btn1 = (Button) findViewById(R.id.btnenviar);
@@ -35,14 +40,16 @@ public class VozTexto extends Activity {
    }
 
    @Override
-   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+   protected void onActivityResult(int requestCode, int resultCode, Intent data)
+   {
        super.onActivityResult(requestCode, resultCode, data);
 
-       switch (requestCode) {
+       switch (requestCode)
+       {
            case RECOGNIZE_SPEECH_ACTIVITY:
 
-               if (resultCode == RESULT_OK && null != data) {
-
+               if (resultCode == RESULT_OK && null != data)
+               {
                    ArrayList<String> speech = data
                            .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                    String strSpeech2Text = speech.get(0);
@@ -52,13 +59,12 @@ public class VozTexto extends Activity {
 
                break;
            default:
-
                break;
        }
    }
 
-   public void onClickImgBtnHablar(View v) {
-
+   public void onClickImgBtnHablar(View v)
+   {
        Intent intentActionRecognizeSpeech = new Intent(
                RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 
@@ -68,12 +74,12 @@ public class VozTexto extends Activity {
        try {
            startActivityForResult(intentActionRecognizeSpeech,
                    RECOGNIZE_SPEECH_ACTIVITY);
-       } catch (ActivityNotFoundException a) {
+       } catch (ActivityNotFoundException a)
+       {
            Toast.makeText(getApplicationContext(),
                    R.string.ErrorReconocimiento,
                    Toast.LENGTH_SHORT).show();
        }
-
    }
     public void LanzarEmail()
     {

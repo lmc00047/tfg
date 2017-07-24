@@ -6,22 +6,38 @@ import android.media.AudioRecord;
 import android.media.AudioTrack;
 import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.Socket;
 import java.net.SocketException;
 
 public class Intercomunicador extends AppCompatActivity {
 
     DatagramSocket s;
     Boolean a = false;
+    public Handler UIHandler;
 
+    public Thread Thread1= null;
+
+    public static final int SERVERPORT= 2510;
+    public static final String SERVERIP =MiPerfil.ipcuidador.getText().toString();
+
+    public static int auxServer = 0;
+
+
+    public static DataOutputStream mensaje;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,28 +46,41 @@ public class Intercomunicador extends AppCompatActivity {
 
         try {
             s=new DatagramSocket(9999);
+            System.out.println("");
+            Toast.makeText(this,"esta es la s"+s,Toast.LENGTH_SHORT).show();
         } catch (SocketException e) {
             e.printStackTrace();
         }
 
         final Button btn1 =(Button)findViewById(R.id.buttonPlay);
 
-        btn1.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                if(a==false){
-                    btn1.setText(R.string.stop);
-                    button_start();
-                    a=true;
-                }else {
-                    btn1.setText(R.string.start);
-                    button_stop();
-                    a=false;
+        cliente();
+
+     //   if (MainActivity.auxConexion == 1) {
+
+            btn1.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    if(a==false){
+                        btn1.setText(R.string.stop);
+                        button_start();
+                        a=true;
+                    }else {
+                        btn1.setText(R.string.start);
+                        button_stop();
+                        a=false;
+                    }
                 }
-            }
 
 
-        });
+            });
+        //}
+        //else
+       //{
+           // Toast.makeText(getApplicationContext(),"el cuidador no esta conectado",Toast.LENGTH_SHORT).show();
+
+       // }
+
 
     }
     Thread tx, rx;
@@ -82,8 +111,9 @@ public class Intercomunicador extends AppCompatActivity {
                         vectores [(i*2)+1]=(byte) (vectores [i*2]%256);
                     }
                     try{
-                        p =new DatagramPacket(vectores,vectores.length,InetAddress.getByName(""+e1.getText()),9999);
-                       // System.out.println(""+InetAddress.getByName(""+e1.getText()));
+                        p =new DatagramPacket(vectores,vectores.length,InetAddress.getByName(""+MiPerfil.ipcuidador.getText()),9999);
+
+                        System.out.println("sergiooooooo"+MiPerfil.ipcuidador.getText());
                         s.send(p);
                     }catch (Exception e){
                         e.printStackTrace();
@@ -133,6 +163,68 @@ public class Intercomunicador extends AppCompatActivity {
         stopped=true;
     }
 
+
+    public void cliente()
+    {
+
+        UIHandler = new Handler();
+
+        Thread1 = new Thread(new tutorial.com.movilidad1.Intercomunicador.Thread1());
+        Thread1.start();
+
+    }
+
+    class Thread1 implements Runnable{
+        public void run(){
+            Socket socket =null;
+            try{
+                InetAddress serverAddr = InetAddress.getByName(SERVERIP);
+                socket = new Socket(serverAddr,SERVERPORT);
+                System.out.println("CLIENTE:Conexión establecida");
+                MainActivity.auxConexion = 1;
+                tutorial.com.movilidad1.Intercomunicador.Thread2 commThread = new tutorial.com.movilidad1.Intercomunicador.Thread2(socket);
+                new Thread(commThread).start();
+                return;
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    class Thread2 implements Runnable{
+        private Socket clientSocket;
+
+        private BufferedReader input;
+        private BufferedWriter output;
+
+        public Thread2(Socket clientSocket){
+
+            this.clientSocket = clientSocket;
+
+            try{
+
+
+                mensaje = new DataOutputStream(clientSocket.getOutputStream());
+
+
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+
+        public void run(){
+
+            //while (!Thread.currentThread().isInterrupted()){
+            try{
+
+                mensaje.writeUTF(Hash.md5(MiPerfil.clave.getText().toString()));
+
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+            //}
+        }
+    }
 
 }
 

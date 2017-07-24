@@ -7,6 +7,7 @@ android:layout_height="match_parent">
 <ImageView
     android:id="@+id/imagen"
     android:layout_width="match_parent"
+    android:layout_margin="5dp"
     android:layout_height="86dp"
     android:background="@drawable/movilidad"/>
 
@@ -17,6 +18,7 @@ android:layout_height="match_parent">
      android:text="@string/acercade"
      android:textColor="#FFFFFF"
      android:textSize="20dp"
+     android:layout_margin="5dp"
      android:background="@drawable/redondear4"
      android:layout_below="@+id/imagen"
      android:layout_alignParentLeft="true"

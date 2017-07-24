@@ -7,10 +7,18 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
-public class EscucharMensajes extends DialogFragment {
+/**
+ * Es la clase del cuadro de diálogo que permite poder escuchar los SMS en voz alta
+ * Es la encargada de realizar las acciones, por ejemplo, si en el cuadro de dialogo
+ * se selecciona la opción 'SI', quiere decir que los SMS serán leídos en voz alta,
+ * cambiando el valor de la variable estadoEscuchar.
+ */
+public class EscucharMensajes extends DialogFragment
+{
     public static int estadoEscuchar;
 
-    static EscucharMensajes newInstance(String title) {
+    static EscucharMensajes newInstance(String title)
+    {
         EscucharMensajes fragment = new EscucharMensajes();
         Bundle args = new Bundle();
         args.putString("title", title);
@@ -19,8 +27,8 @@ public class EscucharMensajes extends DialogFragment {
     }
 
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
+    public Dialog onCreateDialog(Bundle savedInstanceState)
+    {
         String title = getArguments().getString("title");
         return new AlertDialog.Builder(getActivity())
                 .setIcon(R.drawable.botonmensaje)
@@ -29,7 +37,6 @@ public class EscucharMensajes extends DialogFragment {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // TODO Auto-generated method stub
                         ((Configuracion) getActivity()).doPositiveClick();
                     }
                 })
@@ -37,12 +44,10 @@ public class EscucharMensajes extends DialogFragment {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // TODO Auto-generated method stub
                         EscucharMensajes.this.estadoEscuchar = 1;
                         ((Configuracion) getActivity()).doNegativeClick();
                     }
                 })
-
                 .create();
     }
 }

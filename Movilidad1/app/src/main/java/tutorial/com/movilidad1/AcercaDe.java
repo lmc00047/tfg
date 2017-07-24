@@ -3,20 +3,16 @@ package tutorial.com.movilidad1;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+/**
+ * Es la clase que se encarga de llamar a la vista acercade.xml en la cual
+ * aparece una breve descripción, la autora y el icono de la aplicación
+ */
 
-
-public class AcercaDe extends AppCompatActivity {
-    /**
-     * Es el metodo que se llama cuando se crea una actividad,
-     * siendo acercade una vista dónde aparece una breve descripción de l aplicación
-     * la autora y el icono de la aplicación
-     * @param savedInstanceState
-     */
+public class AcercaDe extends AppCompatActivity
+{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acercade);
-
-
     }
 }

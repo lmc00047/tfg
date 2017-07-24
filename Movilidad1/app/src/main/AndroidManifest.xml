@@ -48,15 +48,13 @@
         </activity>
         <activity android:name=".Configuracion">
         </activity>
-        <activity android:name=".permiso">
+        <activity android:name=".Llamar112new">
         </activity>
         <activity android:name=".PermisoMicrofono">
         </activity>
         <activity android:name=".Intercomunicador">
         </activity>
         <activity android:name=".Politica">
-        </activity>
-        <activity android:name=".TextoVozSMS">
         </activity>
 
     </application>

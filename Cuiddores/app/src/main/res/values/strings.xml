@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Movilidad Cuidadores</string>
+      <string name="acerca">Acerca de...</string>
+    <string name="configuracion">Configuración</string>
+    <string name="perfil">Mi Perfil</string>
+    <string name="ip">Dirección IP cuidador</string>
+    <string name="clave">Contraseña de conexión</string>
+    <string name="guardar">GUARDAR</string>
+    <string name="politica">POLÍTICA DE PRIVACIDAD</string>
+    <string name="text1">El presente Política de Privacidad establece los términos en que Movilidad Reducida usa y protege la información que es proporcionada por sus usuarios al momento de utilizar su aplicación móvil. Esta compañía está comprometida con la seguridad de los datos de sus usuarios. Cuando le pedimos llenar los campos de información personal con la cual usted pueda ser identificado, lo hacemos asegurando que sólo se empleará de acuerdo con los términos de este documento. Sin embargo esta Política de Privacidad puede cambiar con el tiempo o ser actualizada por lo que le recomendamos y enfatizamos revisar continuamente esta página para asegurarse que está de acuerdo con dichos cambios.</string>
+    <string name="informacion">Información que es recogida</string>
+    <string name="text3">Nuestra aplicación podrá recoger información personal por ejemplo: nombre, correo electrónico y contraseña, así como datos de su cuidador.  Nuestra aplicación emplea la información con el fin de proporcionar el mejor servicio posible, particularmente para mantener un registro de usuarios, poder enviar mensajes con los datos correctos y realizar llamadas a las personas indicadas.  Movilidad reducida está altamente comprometido para cumplir con el compromiso de mantener su información segura. Usamos los sistemas más avanzados y los actualizamos constantemente para asegurarnos que no exista ningún acceso no autorizado.</string>
+    <string name="control">Control de su información personal</string>
+    <string name="text4">En cualquier momento usted puede restringir la recopilación o el uso de la información personal que es proporcionada a nuestra aplicación, sabiendo que sin esa información gran parte de las funciones de dicha aplicación no serán realizadas correctamente. Esta compañía no venderá, cederá ni distribuirá la información personal que es recopilada sin su consentimiento, salvo que sea requerido por un juez con un orden judicial. Movilidad Reducida se reserva el derecho de cambiar los términos de la presente Política de Privacidad en cualquier momento.</string>
+    <string name="politica2">Términos y Política de Privacidad</string>
+    <string name="user">Mi perfil</string>
+    <string name="aceptPolitica">He leído y acepto la Politica de Privacidad</string>
+    <string name="acercade">Realizada por Laura Moreno Chicharro. Es la versión de cuidadores y permite poder comunicarse con el paciente a través del botón de intercomunicador.</string>
+    <string name="start">START</string>
+    <string name="stop">STOP</string>
+</resources>
+
