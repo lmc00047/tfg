@@ -8,7 +8,10 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -90,7 +93,7 @@
                 android:scrollHorizontally="false"
                 android:text="@string/politica2"
                 android:textColor="@color/colorAccent"
-                android:textSize="13dp" />
+                android:textSize="12dp" />
             <CheckBox
                 android:id="@+id/check"
                 android:textColor="#FFFFFF"

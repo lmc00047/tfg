@@ -3,7 +3,7 @@
       <string name="acerca">Acerca de...</string>
     <string name="configuracion">Configuración</string>
     <string name="perfil">Mi Perfil</string>
-    <string name="ip">Dirección IP cuidador</string>
+    <string name="ip">Dirección IP paciente</string>
     <string name="clave">Contraseña de conexión</string>
     <string name="guardar">GUARDAR</string>
     <string name="politica">POLÍTICA DE PRIVACIDAD</string>
