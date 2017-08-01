@@ -31,7 +31,6 @@ public class MiPerfil extends DialogFragment implements TextView.OnEditorActionL
 
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
         View view = inflater.inflate(R.layout.miperfil, container);
@@ -41,6 +40,8 @@ public class MiPerfil extends DialogFragment implements TextView.OnEditorActionL
         clave= (EditText)view.findViewById(R.id.clave);
         politica = (Button) view.findViewById(R.id.botonpolitica);
         chec= (CheckBox)view.findViewById(R.id.check);
+
+
 
 
         //creamos una instancia para el escuchador de eventos

@@ -27,33 +27,72 @@ public class Intercomunicador extends AppCompatActivity {
     public static DatagramSocket s;
     Boolean a = false;
     public Handler UIHandler;
-
     public Thread Thread1 = null;
-
     public static final int SERVERPORT = 2510;
     public static final String SERVERIP = MiPerfil.ipcuidador.getText().toString();
-
     public static int auxServer = 0;
-
-    private static AudioRecord recorder = null;
+    public static AudioRecord recorder = null;
     private static AudioTrack track = null;
-
-
     public static DataOutputStream mensaje;
     private Thread tx, rx;
     private Boolean stopped = true;
+    public static int comprobarMicro = 0;
+    public static int comprobarSonido = 0;
+    Boolean c =false;
+    Boolean b =false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.intercomunicador);
+        final Button botonMicro = (Button) findViewById(R.id.BotonMicro);
+        final Button botonSonido = (Button) findViewById(R.id.BotonSonido);
+
+
+        botonMicro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                if (c == true) {
+                    botonMicro.setBackgroundDrawable(getResources().getDrawable(R.drawable.micro));
+                    c = false;
+                    comprobarMicro = 0;
+                } else {
+                    botonMicro.setBackgroundDrawable(getResources().getDrawable(R.drawable.nomicro));
+                    c = true;
+                    comprobarMicro = 1;
+                }
+
+            }
+
+        });
+
+        botonSonido.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                if (b == false) {
+                    botonSonido.setBackgroundDrawable(getResources().getDrawable(R.drawable.sonido));
+                    b = true;
+                    comprobarSonido = 0;
+
+                } else {
+                    botonSonido.setBackgroundDrawable(getResources().getDrawable(R.drawable.nosonido));
+                    b = false;
+                    comprobarSonido = 1;
+
+                }
+
+            }
+
+        });
+
+
+
 
 
         try {
             System.out.println("");
             s = new DatagramSocket(9999);
 
-            //Toast.makeText(this,"esta es la s"+s,Toast.LENGTH_SHORT).show();
         } catch (SocketException e) {
             e.printStackTrace();
         }
@@ -61,8 +100,6 @@ public class Intercomunicador extends AppCompatActivity {
         final Button btn1 = (Button) findViewById(R.id.buttonPlay);
 
         cliente();
-
-        //   if (MainActivity.auxConexion == 1) {
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,13 +117,6 @@ public class Intercomunicador extends AppCompatActivity {
 
 
         });
-        //}
-        //else
-        //{
-        // Toast.makeText(getApplicationContext(),"el cuidador no esta conectado",Toast.LENGTH_SHORT).show();
-
-        // }
-
 
     }
 
@@ -120,20 +150,20 @@ public class Intercomunicador extends AppCompatActivity {
 
                     while (stopped == false) {
                         try {
-                            s.receive(dp);
-                            for (int i = 0; i < bufferRecS.length; i++) {
-                                bufferRecS[i] = (short) (bufferRecB[i * 2] * 256 + bufferRecB[(i * 2) + 1]);
+                            if (comprobarSonido == 0) {
+                                s.receive(dp);
+                                for (int i = 0; i < bufferRecS.length; i++) {
+                                    bufferRecS[i] = (short) (bufferRecB[i * 2] * 256 + bufferRecB[(i * 2) + 1]);
+                                }
+                                track.write(bufferRecB, 0, bufferRecB.length); //reproducir audio recibido
                             }
-                            //System.out.println("ESTOY RECIBIENDOOOOOOOOOOOOOOOOOOO");
-
-                            track.write(bufferRecB, 0, bufferRecB.length); //reproducir audio recibido
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                            } catch(IOException e){
+                                e.printStackTrace();
+                            } catch (Throwable throwable) {
+                            throwable.printStackTrace();
                         }
-
-
                     }
+
                 }
             });
 
@@ -160,15 +190,12 @@ public class Intercomunicador extends AppCompatActivity {
             track = null;
         }
     }
-
-
     public void cliente() {
 
         UIHandler = new Handler();
 
         Thread1 = new Thread(new tutorial.com.cuidadores.Intercomunicador.Thread1());
         Thread1.start();
-
     }
 
     class Thread1 implements Runnable {
@@ -178,7 +205,7 @@ public class Intercomunicador extends AppCompatActivity {
                 InetAddress serverAddr = InetAddress.getByName(SERVERIP);
                 socket = new Socket(serverAddr, SERVERPORT);
                 System.out.println("CLIENTE:Conexión establecida");
-                // MainActivity.auxConexion = 1;
+
                 tutorial.com.cuidadores.Intercomunicador.Thread2 commThread = new tutorial.com.cuidadores.Intercomunicador.Thread2(socket);
                 new Thread(commThread).start();
                 return;
@@ -187,9 +214,6 @@ public class Intercomunicador extends AppCompatActivity {
             }
         }
     }
-
-
-
     class Thread2 implements Runnable {
         private Socket clientSocket;
 
@@ -201,19 +225,13 @@ public class Intercomunicador extends AppCompatActivity {
             this.clientSocket = clientSocket;
 
             try {
-
-
                 mensaje = new DataOutputStream(clientSocket.getOutputStream());
-
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
         public void run() {
 
-            //while (!Thread.currentThread().isInterrupted()){
             try {
 
                 mensaje.writeUTF(Hash.md5(MiPerfil.clave.getText().toString()));
@@ -221,7 +239,7 @@ public class Intercomunicador extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            //}
+
         }
     }
 
@@ -248,8 +266,9 @@ public class Intercomunicador extends AppCompatActivity {
                         }
                         try {
                             p = new DatagramPacket(vectores, vectores.length, InetAddress.getByName("" + MiPerfil.ipcuidador.getText()), 9999);
-
-                            s.send(p);
+                            if(comprobarMicro == 0) {
+                                s.send(p);
+                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

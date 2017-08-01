@@ -36,7 +36,7 @@ public class hiloServer extends Thread {
     public void run() {
         System.out.println("HILO CREADO");
         //Recepcion de mensaje
-        while (true) {
+       // while (true) {
 
                 try {
                     fraseCliente = entrada.readUTF();
@@ -56,7 +56,7 @@ public class hiloServer extends Thread {
                 }
                 System.out.println(fraseCliente);
 
-            }
+          //  }
 
     }
 
