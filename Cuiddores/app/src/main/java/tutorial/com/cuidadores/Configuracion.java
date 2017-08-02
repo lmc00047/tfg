@@ -1,10 +1,10 @@
 package tutorial.com.cuidadores;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 /**
  * Esta clase contiene cuatro botones. Al hacer click sobre cada uno de ellos abre un cuadro de dialogo.
@@ -19,11 +19,8 @@ import android.widget.Toast;
  *
  *
  */
-public class Configuracion extends AppCompatActivity implements MiPerfil.NuevoDialogoListener {
+public class Configuracion extends AppCompatActivity  {
 
-    public Button btnllamada;
-    private Button btnmsgsms;
-    private Button btnleer;
     private Button btnperfil;
 
     /**
@@ -41,7 +38,7 @@ public class Configuracion extends AppCompatActivity implements MiPerfil.NuevoDi
         btnperfil.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View arg0){
-                dialogoPersonalizado();
+                lanzarMiperfil();
             }
         });
     }
@@ -56,27 +53,11 @@ public class Configuracion extends AppCompatActivity implements MiPerfil.NuevoDi
     }
 
 
-    /**
-     * Método para abrir el dialogo personalizado que pertenece al botón de Mi Perfil.
-     */
-    public void dialogoPersonalizado() {
-        MiPerfil dialogoPersonalizado = new MiPerfil();
-        dialogoPersonalizado.show(getSupportFragmentManager(), "personalizado");
 
-        android.app.Fragment frag = getFragmentManager().findFragmentByTag("personalizado"); //encuentra por etiqueta al personalizado
-        if (frag != null) {// Si el fragmento no está visible y está aún en memoria, lo borramos
-            getFragmentManager().beginTransaction().remove(frag).commit();
-        }
-    }
-    /**
-     * Termina dialogo personalizado. Recibimos el texto por el fragment y lo mostramos en pantalla
-     * @param texto
-     */
-    @Override
-    public void FinalizaCuadroDialogo(String texto) {
-        Toast.makeText(this,texto,Toast.LENGTH_SHORT).show();
-        Toast.makeText(this,texto,Toast.LENGTH_LONG).show();
-    }
+public void lanzarMiperfil() {
+    Intent i = new Intent(this, MiPerfil.class);
+    startActivity(i);
+}
 }
 
 

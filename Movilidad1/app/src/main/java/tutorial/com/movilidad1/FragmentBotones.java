@@ -92,29 +92,12 @@ public class FragmentBotones extends Fragment
         botonRtp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                //if (auxConexion == 1) {
                 lanzarIntercomunicador();
-               // }
-               // else
-               // {
-               //     Toast.makeText(getContext(),"el cuidador no esta conectado",Toast.LENGTH_SHORT).show();
 
-               // }
         }
         });
 
-    //  OnClick Largo del boton RTP
-       botonRtp.setOnLongClickListener(new View.OnLongClickListener() {
-           @Override
-            public boolean onLongClick(View arg0) {
 
-               lanzarIntercomunicador();
-
-
-               return true;
-            }
-
-       });
     //-----------------------------------------FIN BOTONES-------------------------------------------------------------------//
         return view;
 
@@ -163,12 +146,7 @@ public class FragmentBotones extends Fragment
         Intent i = new Intent(getContext(), SendSmS.class);
         startActivity(i);
     }
-    //Lanzar permiso microfono
-    public void lanzarmicrofono()
-    {
-        Intent i = new Intent(getContext(), PermisoMicrofono.class);
-        startActivity(i);
-    }
+
     //Lanzar Función Intercomunicador
     public void lanzarIntercomunicador()
     {

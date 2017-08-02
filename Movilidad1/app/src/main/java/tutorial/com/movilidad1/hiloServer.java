@@ -36,24 +36,27 @@ public class hiloServer extends Thread {
     public void run() {
         System.out.println("HILO CREADO");
         //Recepcion de mensaje
-        //while (true) {
-            try {
-                fraseCliente = entrada.readUTF();
-                System.out.println(fraseCliente);
+       // while (true) {
 
-                if(fraseCliente.equals(Hash.md5(MiPerfil.clave.getText().toString())))
+                try {
+                    fraseCliente = entrada.readUTF();
+                    System.out.println(fraseCliente);
+
+                    if (fraseCliente.equals(Hash.md5(MiPerfil.clave.getText().toString())))
 
                     {
-                    System.out.println("SOMOS UNOS CRACKS DE LA LIGA");
-                    auxEstConex = 1;
+                        System.out.println("CONTRASEÑA CORRECTA");
+                        auxEstConex = 1;
+
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+
 
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            System.out.println(fraseCliente);
+                System.out.println(fraseCliente);
 
-        //}
+          //  }
 
     }
 

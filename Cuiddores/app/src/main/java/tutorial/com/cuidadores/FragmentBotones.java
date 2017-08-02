@@ -12,7 +12,6 @@ import android.widget.Button;
 
 public class FragmentBotones extends Fragment
 {
-
     private View mLayout;
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -21,11 +20,6 @@ public class FragmentBotones extends Fragment
         View view = inflater.inflate(R.layout.fragmentbotones, container, false);
 
         Button botonRtp = (Button) view.findViewById(R.id.botonAzul);
-
-
-
-
-
 
 //-----------------------------------------BOTON AZUL----------------------------------------------------//
     //OnClick del boton intercomunicador
@@ -37,19 +31,6 @@ public class FragmentBotones extends Fragment
 
         });
 
-
-
-//OnClick Largo del boton intercomunicador
- /*     botonRtp.setOnLongClickListener(new View.OnLongClickListener() {
-          @Override
-          public boolean onLongClick(View arg0) {
-
-               lanzarVozTexto();
-
-                return true;
-            }
-
-        });*/
 //-----------------------------------------FIN BOTON AZUL------------------------------------------------//
         return view;
 
@@ -59,12 +40,6 @@ public class FragmentBotones extends Fragment
             Intent i = new Intent(getContext(), Intercomunicador.class);
             startActivity(i);
         }
-
-
-
-
-
-
 
 }
 

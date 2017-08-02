@@ -1,19 +1,18 @@
 package tutorial.com.cuidadores;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
 
-public class MiPerfil extends DialogFragment implements TextView.OnEditorActionListener {
+public class MiPerfil extends AppCompatActivity {
 
     public static EditText ipcuidador;
     public static Button botonGuardar;
@@ -21,31 +20,22 @@ public class MiPerfil extends DialogFragment implements TextView.OnEditorActionL
     public static EditText clave;
     public static CheckBox chec;
     public static String ipcuidadorS, claveS;
+    public SharedPreferences prefe;
 
 
-    public interface NuevoDialogoListener{
-        void FinalizaCuadroDialogo(String texto);
-    }
-//Constructor requerido para el DiaogFragment
-    public MiPerfil(){
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.miperfil);
 
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
-        View view = inflater.inflate(R.layout.miperfil, container);
-
-        botonGuardar = (Button) view.findViewById(R.id.guardar);
-        ipcuidador=(EditText)view.findViewById(R.id.DirIp);
-        clave= (EditText)view.findViewById(R.id.clave);
-        politica = (Button) view.findViewById(R.id.botonpolitica);
-        chec= (CheckBox)view.findViewById(R.id.check);
+        botonGuardar = (Button) findViewById(R.id.guardar);
+        ipcuidador=(EditText)findViewById(R.id.DirIp);
+        clave= (EditText)findViewById(R.id.clave);
+        politica = (Button)findViewById(R.id.botonpolitica);
+        chec= (CheckBox)findViewById(R.id.check);
+        prefe=getSharedPreferences("datos", Context.MODE_PRIVATE);
+        mostrar();
 
 
-
-
-        //creamos una instancia para el escuchador de eventos
-        //Cuando haya una modificacion en el EditText.
 
 
         botonGuardar.setOnClickListener(new View.OnClickListener() {
@@ -54,7 +44,7 @@ public class MiPerfil extends DialogFragment implements TextView.OnEditorActionL
 
                 ipcuidadorS = ipcuidador.getText().toString();
                claveS = clave.getText().toString();
-
+                ejecutar();
 
             }
 
@@ -62,30 +52,29 @@ public class MiPerfil extends DialogFragment implements TextView.OnEditorActionL
         politica.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View arg0){
-                Intent i = new Intent(getContext(), Politica.class);
+                Intent i = new Intent(getApplication(), Politica.class);
                 startActivity(i);
             }
         });
 
-
-        ipcuidador.setText(ipcuidadorS);
-        clave.setText(claveS);
-
-
-        //getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);//que salga el teclado visible
-        getDialog().setTitle("Mi titulo"); //titulo del dialogo
-        return view;
+        return ;
 
 
     }
 
-    @Override
-    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-        NuevoDialogoListener activity =(NuevoDialogoListener) getActivity();
-        Object texto;
-        this.dismiss();
-        return true;
+    public void ejecutar() {
+        SharedPreferences.Editor editor=prefe.edit();
+        editor.putString("ipCuidador", ipcuidadorS);
+        editor.putString("claveCuidador", claveS);
+        editor.commit();
     }
+
+    public void mostrar(){
+        clave.setText(prefe.getString("claveCuidador","").toString());
+        ipcuidador.setText(prefe.getString("ipCuidador","").toString());
+    }
+
+
 }
 
 

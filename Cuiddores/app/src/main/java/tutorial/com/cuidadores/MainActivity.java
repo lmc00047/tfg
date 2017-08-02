@@ -1,10 +1,13 @@
 package tutorial.com.cuidadores;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,14 +29,34 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mLayout = findViewById(R.id.fragmentbotones);
-
         nuevoHiloServidor();
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); //pantalla activa
 
+        //Si es la primera vez que se instala la aplicación, entonces muestra el cuadro de dialogo del perfil
+        switch (getFirstTimeRun())
+        {
+            case 0:
+                LanzarMiperfil();
+                requestPermissionMicrofono();
+                break;
+        }
+    }
 
+    //Método para saber si ha sido la primera vez que se ha instalado la aplicación o no.
+    private int getFirstTimeRun()
+    {
+        SharedPreferences sp = getSharedPreferences("MYAPP", 0);
+        int result, currentVersionCode = BuildConfig.VERSION_CODE;
+        int lastVersionCode = sp.getInt("FIRSTTIMERUN", -1);
+        if (lastVersionCode == -1) result = 0;
+        else
+            result = (lastVersionCode == currentVersionCode) ? 1 : 2;
+        sp.edit().putInt("FIRSTTIMERUN", currentVersionCode).apply();
+        return result;
 
     }
+    
 
 
     public void nuevoHiloServidor(){
@@ -65,14 +88,26 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //*********************************Permiso microfono**********************************
+    //Paso 2: Solicitar permiso
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void requestPermissionMicrofono() {
+        //shouldShowRequestPermissionRationale es verdadero solamente si ya se había mostrado
+        //anteriormente el dialogo de permisos y el usuario lo negó
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.RECORD_AUDIO)) {
+        } else {
+            //si es la primera vez se solicita el permiso directamente
+            requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO},
+                    MY_WRITE_EXTERNAL_STORAGE);
+        }
+    }
 
-
-
-
-
-
-
-
+    //*********************************FIN************************************************
+    public void LanzarMiperfil(){
+        Intent i = new Intent(this, MiPerfil.class);
+        startActivity(i);
+    }
 
 }
 

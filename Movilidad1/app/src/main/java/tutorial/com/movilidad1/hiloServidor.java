@@ -36,6 +36,11 @@ public class hiloServidor extends Thread{
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+            try {
+                sc.close();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         }
     }
 

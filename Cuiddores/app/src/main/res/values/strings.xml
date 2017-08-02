@@ -18,5 +18,6 @@
     <string name="acercade">Realizada por Laura Moreno Chicharro. Es la versión de cuidadores y permite poder comunicarse con el paciente a través del botón de intercomunicador.</string>
     <string name="start">START</string>
     <string name="stop">STOP</string>
+    <string name="errormicro">ERROR MICRÓFONO. Para poder utilizar el micrófono se han de aceptar los permisos.</string>
 </resources>
 

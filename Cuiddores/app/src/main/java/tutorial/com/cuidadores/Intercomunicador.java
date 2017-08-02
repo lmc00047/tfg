@@ -1,16 +1,22 @@
 package tutorial.com.cuidadores;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioRecord;
 import android.media.AudioTrack;
 import android.media.MediaRecorder;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -22,7 +28,11 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
 
-public class Intercomunicador extends AppCompatActivity {
+
+public class Intercomunicador extends AppCompatActivity{
+
+    private static final int MY_WRITE_EXTERNAL_STORAGE = 0;
+    private View mLayout;
 
     public static DatagramSocket s;
     Boolean a = false;
@@ -41,10 +51,12 @@ public class Intercomunicador extends AppCompatActivity {
     Boolean c =false;
     Boolean b =false;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.intercomunicador);
+
         final Button botonMicro = (Button) findViewById(R.id.BotonMicro);
         final Button botonSonido = (Button) findViewById(R.id.BotonSonido);
 
@@ -84,22 +96,9 @@ public class Intercomunicador extends AppCompatActivity {
             }
 
         });
-
-
-
-
-
-        try {
-            System.out.println("");
-            s = new DatagramSocket(9999);
-
-        } catch (SocketException e) {
-            e.printStackTrace();
-        }
-
         final Button btn1 = (Button) findViewById(R.id.buttonPlay);
 
-        cliente();
+
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,9 +117,85 @@ public class Intercomunicador extends AppCompatActivity {
 
         });
 
+        verifyPermissionMicrofono();
     }
 
+    //Paso 1. Verificar permiso
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void verifyPermissionMicrofono() {
 
+        //WRITE_EXTERNAL_STORAGE tiene implícito READ_EXTERNAL_STORAGE porque pertenecen al mismo
+        //grupo de permisos
+
+        int writePermission = checkSelfPermission(Manifest.permission.RECORD_AUDIO);
+
+        if (writePermission != PackageManager.PERMISSION_GRANTED) {
+            requestPermissionMicrofono();
+        } else {
+            try {
+
+                try {
+                    System.out.println("");
+                    s = new DatagramSocket(9999);
+
+                } catch (SocketException e) {
+                    e.printStackTrace();
+                }
+                cliente();
+
+
+
+
+            } catch (Exception e) {
+
+           }
+
+        }
+    }
+
+    //Paso 2: Solicitar permiso
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void requestPermissionMicrofono() {
+        //shouldShowRequestPermissionRationale es verdadero solamente si ya se había mostrado
+        //anteriormente el dialogo de permisos y el usuario lo negó
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.RECORD_AUDIO)) {
+            requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO},
+                    MY_WRITE_EXTERNAL_STORAGE);
+        } else {
+            //si es la primera vez se solicita el permiso directamente
+            requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO},
+                    MY_WRITE_EXTERNAL_STORAGE);
+        }
+    }
+
+    //Paso 3: Procesar respuesta de usuario
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        //Si el requestCode corresponde al que usamos para solicitar el permiso y
+        //la respuesta del usuario fue positiva
+        if (requestCode == MY_WRITE_EXTERNAL_STORAGE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                try {
+
+
+
+
+
+                } catch (Exception e) {
+                  Toast.makeText(getApplicationContext(), R.string.errormicro, Toast.LENGTH_LONG).show();
+
+
+                }
+
+            } else {
+                Toast.makeText(getApplicationContext(), R.string.errormicro, Toast.LENGTH_LONG).show();
+
+            }
+        }
+    }
     public synchronized void button_start() {
         if (stopped == true) {
 
@@ -137,7 +212,7 @@ public class Intercomunicador extends AppCompatActivity {
                     AudioTrack.MODE_STREAM);
 
 
-            tx = new Thread(new GrabaAudio());
+            tx = new Thread(new Intercomunicador.GrabaAudio());
 
             rx = new Thread(new Runnable() {
                 @Override
@@ -157,9 +232,9 @@ public class Intercomunicador extends AppCompatActivity {
                                 }
                                 track.write(bufferRecB, 0, bufferRecB.length); //reproducir audio recibido
                             }
-                            } catch(IOException e){
-                                e.printStackTrace();
-                            } catch (Throwable throwable) {
+                        } catch(IOException e){
+                            e.printStackTrace();
+                        } catch (Throwable throwable) {
                             throwable.printStackTrace();
                         }
                     }
@@ -194,7 +269,7 @@ public class Intercomunicador extends AppCompatActivity {
 
         UIHandler = new Handler();
 
-        Thread1 = new Thread(new tutorial.com.cuidadores.Intercomunicador.Thread1());
+        Thread1 = new Thread(new Intercomunicador.Thread1());
         Thread1.start();
     }
 
@@ -206,7 +281,7 @@ public class Intercomunicador extends AppCompatActivity {
                 socket = new Socket(serverAddr, SERVERPORT);
                 System.out.println("CLIENTE:Conexión establecida");
 
-                tutorial.com.cuidadores.Intercomunicador.Thread2 commThread = new tutorial.com.cuidadores.Intercomunicador.Thread2(socket);
+                Intercomunicador.Thread2 commThread = new Intercomunicador.Thread2(socket);
                 new Thread(commThread).start();
                 return;
             } catch (IOException e) {
@@ -256,27 +331,34 @@ public class Intercomunicador extends AppCompatActivity {
 
             if (recorder.getState() == AudioRecord.STATE_INITIALIZED) {
 
-                    recorder.startRecording();
-                    while (recorder.getRecordingState() == AudioRecord.RECORDSTATE_RECORDING) {
-                        recorder.read(buffer, 0, buffer.length); //capturar audio
+                recorder.startRecording();
+                while (recorder.getRecordingState() == AudioRecord.RECORDSTATE_RECORDING) {
+                    recorder.read(buffer, 0, buffer.length); //capturar audio
 
-                        for (int i = 0; i < buffer.length; i++) {
-                            vectores[i * 2] = (byte) (buffer[i] / 256);
-                            vectores[(i * 2) + 1] = (byte) (vectores[i * 2] % 256);
-                        }
-                        try {
-                            p = new DatagramPacket(vectores, vectores.length, InetAddress.getByName("" + MiPerfil.ipcuidador.getText()), 9999);
-                            if(comprobarMicro == 0) {
-                                s.send(p);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                    for (int i = 0; i < buffer.length; i++) {
+                        vectores[i * 2] = (byte) (buffer[i] / 256);
+                        vectores[(i * 2) + 1] = (byte) (vectores[i * 2] % 256);
                     }
+                    try {
+                        p = new DatagramPacket(vectores, vectores.length, InetAddress.getByName("" + MiPerfil.ipcuidador.getText()), 9999);
+                        if(comprobarMicro == 0) {
+                            s.send(p);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
 
             } else
                 button_stop();
         }
     }
+
+
+
+
+
+
+
 }
 

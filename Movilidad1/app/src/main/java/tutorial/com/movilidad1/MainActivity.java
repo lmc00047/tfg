@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         switch (getFirstTimeRun())
         {
             case 0:
-                dialogoPersonalizado();
+                LanzarMiperfil();
                 requestPermission();
                 requestPermissionLlamada();
                 requestPermissionMicrofono();
@@ -171,15 +171,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     }
 
     //*********************************FIN************************************************
-    public void dialogoPersonalizado() {
-        MiPerfil dialogoPersonalizado = new MiPerfil();
-        dialogoPersonalizado.show(getSupportFragmentManager(), "personalizado");
 
-        android.app.Fragment frag = getFragmentManager().findFragmentByTag("personalizado"); //encuentra por etiqueta al personalizado
-        if (frag != null) {// el fragmento no esta visible y esta en memoria aun, lo borramos
-            getFragmentManager().beginTransaction().remove(frag).commit();
-        }
-    }
     public void button_start() {
         sms = new Thread(new Runnable() {
             @Override
@@ -195,6 +187,10 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         sms.start();
     }
+
+
+
+    //CREAR HEBRA
 
     public void nuevoHiloServidor(){
         hiloServidor nuevoHilo = new hiloServidor();
@@ -221,7 +217,10 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         tts.speak(mensaje, TextToSpeech.QUEUE_FLUSH, null);
     }
 
-
+    public void LanzarMiperfil(){
+        Intent i = new Intent(this, MiPerfil.class);
+        startActivity(i);
+    }
 
 }
 

@@ -1,12 +1,11 @@
 package tutorial.com.movilidad1;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -17,7 +16,7 @@ import android.widget.TextView;
  * Además de obtener las variables se encarga de guardarlas y así las demás clases puedan
  * acceder a ellas.
  */
-public class MiPerfil extends DialogFragment implements TextView.OnEditorActionListener
+public class MiPerfil extends AppCompatActivity
 {
     public static EditText name;
     public static EditText email;
@@ -30,38 +29,26 @@ public class MiPerfil extends DialogFragment implements TextView.OnEditorActionL
     public static EditText clave;
     public static CheckBox chec;
     public static String nameS, emailS, passS, emailcuidadorS, tlfcuidadorS,ipcuidadorS,claveS;
+    public SharedPreferences prefe;
 
 
-    public interface NuevoDialogoListener
-    {
-        void FinalizaCuadroDialogo(String texto);
-    }
-    //Constructor requerido para el DiaogFragment
-    public MiPerfil(){
 
-    }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.miperfil);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState)
-    {
-        View view = inflater.inflate(R.layout.miperfil, container);
-        name = (EditText) view.findViewById(R.id.usuario);//queremos conseguir el texto
-        email = (EditText) view.findViewById(R.id.email);
-        pass = (EditText) view.findViewById(R.id.pass);
-        emailcuidador = (EditText) view.findViewById(R.id.emailCuidador);
-        tlfcuidador = (EditText) view.findViewById(R.id.telefono);
-        botonGuardar = (Button) view.findViewById(R.id.guardar);
-        ipcuidador=(EditText)view.findViewById(R.id.DirIp);
-        clave= (EditText)view.findViewById(R.id.clave);
-        politica = (Button) view.findViewById(R.id.botonpolitica);
-        chec= (CheckBox)view.findViewById(R.id.check);
-
-
-        //creamos una instancia para el escuchador de eventos
-        //Cuando haya una modificación en el EditText.
-        name.setOnEditorActionListener(this);
-        //El puntero aparece en el nombre de usuario
-        name.requestFocus();
+        name = (EditText) findViewById(R.id.usuario);//queremos conseguir el texto
+        email = (EditText) findViewById(R.id.email);
+        pass = (EditText) findViewById(R.id.pass);
+        emailcuidador = (EditText) findViewById(R.id.emailCuidador);
+        tlfcuidador = (EditText) findViewById(R.id.telefono);
+        botonGuardar = (Button) findViewById(R.id.guardar);
+        ipcuidador=(EditText) findViewById(R.id.DirIp);
+        clave= (EditText) findViewById(R.id.clave);
+        politica = (Button) findViewById(R.id.botonpolitica);
+        chec= (CheckBox)findViewById(R.id.check);
+        prefe=getSharedPreferences("datos", Context.MODE_PRIVATE);
+        mostrar();
 
 
         botonGuardar.setOnClickListener(new View.OnClickListener() {
@@ -75,6 +62,8 @@ public class MiPerfil extends DialogFragment implements TextView.OnEditorActionL
                 tlfcuidadorS = tlfcuidador.getText().toString();
                 ipcuidadorS = ipcuidador.getText().toString();
                 claveS = clave.getText().toString();
+
+                ejecutar();
             }
 
         });
@@ -82,32 +71,35 @@ public class MiPerfil extends DialogFragment implements TextView.OnEditorActionL
         politica.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View arg0){
-                Intent i = new Intent(getContext(), Politica.class);
+                Intent i = new Intent(getApplication(), Politica.class);
                 startActivity(i);
             }
         });
 
-        name.setText(nameS);
-        email.setText(emailS);
-        pass.setText(passS);
-        emailcuidador.setText(emailcuidadorS);
-        tlfcuidador.setText(tlfcuidadorS);
-        clave.setText(claveS);
-        ipcuidador.setText(ipcuidadorS);
 
-        getDialog().setTitle("Mi titulo"); //titulo del dialogo
-        return view;
+        return;
     }
 
-    @Override
-    public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
-    {
-        NuevoDialogoListener activity =(NuevoDialogoListener) getActivity();
-        Object texto;
-        //Aparece el nombre de usuario por pantalla
-        activity.FinalizaCuadroDialogo(name.getText().toString());
-        this.dismiss();
-        return true;
+    public void ejecutar() {
+        SharedPreferences.Editor editor=prefe.edit();
+        editor.putString("name", nameS);
+        editor.putString("email", emailS);
+        editor.putString("pass", passS);
+        editor.putString("emailcuidador", emailcuidadorS);
+        editor.putString("tlfcuidador", tlfcuidadorS);
+        editor.putString("ipcuidador", ipcuidadorS);
+        editor.putString("clave", claveS);
+        editor.commit();
+    }
+
+    public void mostrar(){
+        name.setText(prefe.getString("name","").toString());
+        email.setText(prefe.getString("email","").toString());
+        pass.setText(prefe.getString("pass","").toString());
+        emailcuidador.setText(prefe.getString("emailcuidador","").toString());
+        tlfcuidador.setText(prefe.getString("tlfcuidador","").toString());
+        ipcuidador.setText(prefe.getString("ipcuidador","").toString());
+        clave.setText(prefe.getString("clave","").toString());
     }
 }
 
