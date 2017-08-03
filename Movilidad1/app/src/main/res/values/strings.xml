@@ -68,6 +68,8 @@
     <string name="start">START</string>
  <string name="stop">STOP</string>
  <string name="aceptPolitica">He leído y acepto la Politica de Privacidad</string>
+ <string name="Error">Ha ocurrido un error de conexión</string>
+ <string name="ErrorMicrofono">Para poder utilizar el intercomunicador hay que establecer la dirección IP del cuidador y la contraseña de conexión en configuración.</string>
 
 
 </resources>

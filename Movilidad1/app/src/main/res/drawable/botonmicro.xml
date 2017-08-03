@@ -2,7 +2,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:state_checked="false"
-        android:drawable="@drawable/micro" />
+        android:drawable="@drawable/micro1" />
     <item android:state_checked="false"
         android:drawable="@drawable/nomicro" />
 </selector>

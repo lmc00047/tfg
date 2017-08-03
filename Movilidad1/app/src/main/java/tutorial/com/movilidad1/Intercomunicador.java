@@ -59,13 +59,13 @@ public class Intercomunicador extends AppCompatActivity{
 
         final Button botonMicro = (Button) findViewById(R.id.BotonMicro);
         final Button botonSonido = (Button) findViewById(R.id.BotonSonido);
-
+        final Button botonStart = (Button) findViewById(R.id.buttonPlay);
 
         botonMicro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 if (c == true) {
-                    botonMicro.setBackgroundDrawable(getResources().getDrawable(R.drawable.micro));
+                    botonMicro.setBackgroundDrawable(getResources().getDrawable(R.drawable.micro1));
                     c = false;
                     comprobarMicro = 0;
                 } else {
@@ -96,19 +96,16 @@ public class Intercomunicador extends AppCompatActivity{
             }
 
         });
-        final Button btn1 = (Button) findViewById(R.id.buttonPlay);
 
-
-
-        btn1.setOnClickListener(new View.OnClickListener() {
+        botonStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (a == false) {
-                    btn1.setText(R.string.stop);
+                    botonStart.setText(R.string.stop);
                     button_start();
                     a = true;
                 } else {
-                    btn1.setText(R.string.start);
+                    botonStart.setText(R.string.start);
                     button_stop();
                     a = false;
                 }
@@ -140,13 +137,11 @@ public class Intercomunicador extends AppCompatActivity{
 
                 } catch (SocketException e) {
                     e.printStackTrace();
+                    Toast.makeText(this,R.string.Error,Toast.LENGTH_SHORT).show();
                 }
                 cliente();
-
-
-
-
             } catch (Exception e) {
+                Toast.makeText(this,R.string.ErrorMicrofono,Toast.LENGTH_SHORT).show();
 
            }
 
@@ -180,19 +175,12 @@ public class Intercomunicador extends AppCompatActivity{
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 try {
 
-
-
-
-
                 } catch (Exception e) {
                   Toast.makeText(getApplicationContext(), R.string.errormicro, Toast.LENGTH_LONG).show();
-
-
                 }
 
             } else {
                 Toast.makeText(getApplicationContext(), R.string.errormicro, Toast.LENGTH_LONG).show();
-
             }
         }
     }
@@ -203,7 +191,6 @@ public class Intercomunicador extends AppCompatActivity{
                     AudioFormat.CHANNEL_CONFIGURATION_MONO, AudioFormat.ENCODING_PCM_16BIT,
                     AudioRecord.getMinBufferSize(8000, AudioFormat.CHANNEL_CONFIGURATION_MONO,
                             AudioFormat.ENCODING_PCM_16BIT));
-
 
             int minSize = AudioTrack.getMinBufferSize(8000, AudioFormat.CHANNEL_CONFIGURATION_MONO, AudioFormat.ENCODING_PCM_16BIT);
 
@@ -234,8 +221,13 @@ public class Intercomunicador extends AppCompatActivity{
                             }
                         } catch(IOException e){
                             e.printStackTrace();
+                            Toast.makeText(getApplicationContext(),R.string.ErrorMicrofono,Toast.LENGTH_SHORT).show();
+
+
                         } catch (Throwable throwable) {
                             throwable.printStackTrace();
+                            Toast.makeText(getApplicationContext(),R.string.ErrorMicrofono,Toast.LENGTH_SHORT).show();
+
                         }
                     }
 
@@ -268,7 +260,6 @@ public class Intercomunicador extends AppCompatActivity{
     public void cliente() {
 
         UIHandler = new Handler();
-
         Thread1 = new Thread(new Intercomunicador.Thread1());
         Thread1.start();
     }
@@ -286,6 +277,8 @@ public class Intercomunicador extends AppCompatActivity{
                 return;
             } catch (IOException e) {
                 e.printStackTrace();
+
+                //no
             }
         }
     }
@@ -303,6 +296,7 @@ public class Intercomunicador extends AppCompatActivity{
                 mensaje = new DataOutputStream(clientSocket.getOutputStream());
             } catch (IOException e) {
                 e.printStackTrace();
+            //no
             }
         }
         public void run() {
@@ -322,7 +316,6 @@ public class Intercomunicador extends AppCompatActivity{
     public class GrabaAudio implements Runnable {
         @Override
         public void run () {
-            //android.os.Process.setThreadPriority(Process.THREAD_PRIORITY_AUDIO);
             short buffer[];
 
             buffer = new short[128];
@@ -346,6 +339,7 @@ public class Intercomunicador extends AppCompatActivity{
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
+                        //no
                     }
                 }
 
@@ -353,12 +347,5 @@ public class Intercomunicador extends AppCompatActivity{
                 button_stop();
         }
     }
-
-
-
-
-
-
-
 }
 
