@@ -22,8 +22,7 @@ public class LlamadaDirecta112 extends DialogFragment
             args.putString("title", title);
             fragment.setArguments(args);
             return fragment;
-        }
-
+    }
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState)
         {
@@ -32,18 +31,20 @@ public class LlamadaDirecta112 extends DialogFragment
             return new AlertDialog.Builder(getActivity())
                     .setIcon(R.drawable.botonemergencias)
                     .setTitle(title)
-                    .setPositiveButton(R.string.Automatica, new DialogInterface.OnClickListener() {
-
+                    .setPositiveButton(R.string.Automatica, new DialogInterface.OnClickListener()
+                    {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                        public void onClick(DialogInterface dialog, int which)
+                        {
                             LlamadaDirecta112.this.estadoLlamada = 1;
                             ((Configuracion) getActivity()).doPositiveClick();
                         }
                     })
-                    .setNegativeButton(R.string.Manual, new DialogInterface.OnClickListener() {
-
+                    .setNegativeButton(R.string.Manual, new DialogInterface.OnClickListener()
+                    {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                        public void onClick(DialogInterface dialog, int which)
+                        {
                             LlamadaDirecta112.this.estadoLlamada = 0;
                             ((Configuracion) getActivity()).doNegativeClick();
                         }

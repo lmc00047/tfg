@@ -13,13 +13,16 @@ import java.util.Locale;
 
 /**
  * Esta Clase se encarga de convertir el texto en voz, utiliza para ello la clase TextToSpeech.
+ * El código para convertir texto a voz puede encontrarse en:
+ * https://www.youtube.com/watch?v=5pBr2WyPuDM&t=2164s
+ *
  */
-public class TextoVoz extends Activity implements TextToSpeech.OnInitListener {
-
+public class TextoVoz extends Activity implements TextToSpeech.OnInitListener
+{
     private TextToSpeech tts;
     public static EditText etx;
-    private Button btn;
-    private Button btn1;
+    private Button botonReproducir;
+    private Button botonEnviar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -29,17 +32,17 @@ public class TextoVoz extends Activity implements TextToSpeech.OnInitListener {
 
         tts = new TextToSpeech(this, this);
         etx = (EditText) findViewById(R.id.etxescribir);
-        btn = (Button) findViewById(R.id.btnreproducir);
-        btn1 = (Button) findViewById(R.id.btnenviar);
+        botonReproducir = (Button) findViewById(R.id.btnreproducir);
+        botonEnviar = (Button) findViewById(R.id.btnenviar);
 
-        btn.setOnClickListener(new View.OnClickListener() {
+        botonReproducir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 speakOut();
             }
 
         });
-        btn1.setOnClickListener(new View.OnClickListener() {
+        botonEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 LanzarEmail();
@@ -47,12 +50,9 @@ public class TextoVoz extends Activity implements TextToSpeech.OnInitListener {
 
         });
     }
-
-
     @Override
     public void onInit(int status)
     {
-
         if (status == TextToSpeech.SUCCESS)
         {
             int result = tts.setLanguage(Locale.getDefault());
@@ -61,7 +61,7 @@ public class TextoVoz extends Activity implements TextToSpeech.OnInitListener {
                 Log.e("TTS", "Este lenguaje no es soportado");
             } else
                 {
-                btn.setEnabled(true);
+                botonReproducir.setEnabled(true);
                 speakOut();
                 }
         } else

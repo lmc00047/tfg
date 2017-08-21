@@ -8,9 +8,8 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
 /**
- * Es la clase del cuadro de diálogo que permite poder escuchar los SMS en voz alta
- * Es la encargada de realizar las acciones, por ejemplo, si en el cuadro de dialogo
- * se selecciona la opción 'SI', quiere decir que los SMS serán leídos en voz alta,
+ * Es la clase del fragmento de diálogo que permite poder escuchar los SMS en voz alta.
+ * Si en el cuadro de dialogo se selecciona la opción 'SI' quiere decir que los SMS serán leídos en voz alta,
  * cambiando el valor de la variable estadoEscuchar.
  */
 public class EscucharMensajes extends DialogFragment
@@ -33,17 +32,19 @@ public class EscucharMensajes extends DialogFragment
         return new AlertDialog.Builder(getActivity())
                 .setIcon(R.drawable.botonmensaje)
                 .setTitle(title)
-                .setPositiveButton(R.string.no, new DialogInterface.OnClickListener() {
-
+                .setPositiveButton(R.string.no, new DialogInterface.OnClickListener()
+                {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(DialogInterface dialog, int which)
+                    {
                         ((Configuracion) getActivity()).doPositiveClick();
                     }
                 })
-                .setNegativeButton(R.string.si, new DialogInterface.OnClickListener() {
-
+                .setNegativeButton(R.string.si, new DialogInterface.OnClickListener()
+                {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(DialogInterface dialog, int which)
+                    {
                         EscucharMensajes.this.estadoEscuchar = 1;
                         ((Configuracion) getActivity()).doNegativeClick();
                     }

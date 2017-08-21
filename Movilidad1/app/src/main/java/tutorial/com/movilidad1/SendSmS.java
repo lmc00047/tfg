@@ -11,8 +11,6 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.SmsManager;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.Properties;
@@ -30,16 +28,10 @@ import javax.mail.Session;
 public class SendSmS extends Activity
 {
     private static final int MY_WRITE_EXTERNAL_STORAGE = 0;
-    private View mLayout;
-    private EditText name;
     Session session;
     ProgressDialog pdialog;
     Context context;
-    static String rec, subject, textMessage, textoSiri;
-    private EditText emailcuidador;
     public static int writePermission;
-
-    EnviarSmsoEmail estadoEmail = new EnviarSmsoEmail();
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -53,7 +45,6 @@ public class SendSmS extends Activity
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void verifyPermission()
     {
-        //WRITE_EXTERNAL_STORAGE tiene implícito READ_EXTERNAL_STORAGE porque pertenecen al mismo
         //grupo de permisos
 
         writePermission = checkSelfPermission(Manifest.permission.SEND_SMS);

@@ -1,23 +1,20 @@
 package tutorial.com.movilidad1;
 
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+
+/**
+ * Clase encargada de la recepción y creación de una hebra para cada uno de los clientes que se conectan al servidor.
+ */
 
 public class hiloServidor extends Thread{
 
     int PUERTO=2510;
     ServerSocket sc;
-    Socket so;
-    int count = 0;
-    static DataInputStream dis;
-
-    //SERVIDOR//
 
     public hiloServidor()
     {
-
     }
     @Override
     public void run() {
@@ -34,7 +31,6 @@ public class hiloServidor extends Thread{
 
             }
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             try {
                 sc.close();

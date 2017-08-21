@@ -40,8 +40,6 @@
         </activity>
         <activity android:name=".ReconocimientoVoz">
         </activity>
-        <activity android:name=".Llamar112">
-        </activity>
         <activity android:name=".LlamarContacto">
         </activity>
         <activity android:name=".SendSmS">

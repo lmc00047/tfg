@@ -12,9 +12,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 /**
- * Esta clase es la encargada de guardar las variables obtenidas de la vista Mi perfil.
- * Además de obtener las variables se encarga de guardarlas y así las demás clases puedan
- * acceder a ellas.
+ * Esta clase es la encargada de guardar las variables obtenidas de la vista Mi perfil, siendo éstas
+ * datos personales del usuario.
+ * Además de obtener las variables se encarga de guardarlas como preferencias compartidas y así las
+ * demás clases puedan acceder a ellas.
  */
 public class MiPerfil extends AppCompatActivity
 {
@@ -31,13 +32,12 @@ public class MiPerfil extends AppCompatActivity
     public static String nameS, emailS, passS, emailcuidadorS, tlfcuidadorS,ipcuidadorS,claveS;
     public SharedPreferences prefe;
 
-
-
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.miperfil);
 
-        name = (EditText) findViewById(R.id.usuario);//queremos conseguir el texto
+        name = (EditText) findViewById(R.id.usuario);
         email = (EditText) findViewById(R.id.email);
         pass = (EditText) findViewById(R.id.pass);
         emailcuidador = (EditText) findViewById(R.id.emailCuidador);
@@ -50,11 +50,11 @@ public class MiPerfil extends AppCompatActivity
         prefe=getSharedPreferences("datos", Context.MODE_PRIVATE);
         mostrar();
 
-
-        botonGuardar.setOnClickListener(new View.OnClickListener() {
+        botonGuardar.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View arg0) {
-
+            public void onClick(View arg0)
+            {
                 nameS = name.getText().toString();
                 emailS = email.getText().toString();
                 passS = pass.getText().toString();
@@ -62,25 +62,24 @@ public class MiPerfil extends AppCompatActivity
                 tlfcuidadorS = tlfcuidador.getText().toString();
                 ipcuidadorS = ipcuidador.getText().toString();
                 claveS = clave.getText().toString();
-
                 ejecutar();
             }
-
         });
 
-        politica.setOnClickListener(new View.OnClickListener(){
+        politica.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View arg0){
+            public void onClick(View arg0)
+            {
                 Intent i = new Intent(getApplication(), Politica.class);
                 startActivity(i);
             }
         });
-
-
         return;
     }
 
-    public void ejecutar() {
+    public void ejecutar()
+    {
         SharedPreferences.Editor editor=prefe.edit();
         editor.putString("name", nameS);
         editor.putString("email", emailS);
@@ -92,7 +91,8 @@ public class MiPerfil extends AppCompatActivity
         editor.commit();
     }
 
-    public void mostrar(){
+    public void mostrar()
+    {
         name.setText(prefe.getString("name","").toString());
         email.setText(prefe.getString("email","").toString());
         pass.setText(prefe.getString("pass","").toString());

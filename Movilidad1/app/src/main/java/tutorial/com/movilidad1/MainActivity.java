@@ -21,6 +21,11 @@ import android.widget.Toast;
 
 import java.util.Locale;
 
+/**
+ * Clase principal de la aplicación, la cuál da acceso a las distintas utilidades de la misma.
+ * EL código para comprobar la versión de la aplicación está disponible en:
+ * https://es.stackoverflow.com/questions/3243/saber-cuando-la-app-es-lanzada-por-primera-vez-en-android
+ */
 public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener
 {
     //Declaración de variables
@@ -28,8 +33,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     public View microfono;
     protected PowerManager.WakeLock wakelock; //Pantalla siempre activa
     private static final int MY_WRITE_EXTERNAL_STORAGE = 0;
-    int aux = 0;
-    public static int auxConexion = 0;
     public Thread sms;
     public static int aux_sms = 0;
     public static String mensaje = "";
@@ -47,8 +50,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); //pantalla activa
 
         nuevoHiloServidor();
-
-
         button_start();
 
         //Si es la primera vez que se instala la aplicación, entonces muestra el cuadro de dialogo del perfil
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         }
     }
 
-    //Método para saber si ha sido la primera vez que se ha instalado la aplicación o no.
+    //Método que comprueba si ha sido la primera vez que se ha instalado la aplicación o no.
     private int getFirstTimeRun()
     {
         SharedPreferences sp = getSharedPreferences("MYAPP", 0);
@@ -79,7 +80,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     public void onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        microfono.setOnClickListener(new View.OnClickListener() {
+        microfono.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View arg0) {
             }
@@ -124,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         return super.onOptionsItemSelected(item);
     }
 
-    //********************************Permiso Sms**************************************************
+    //********************************Permiso Sms***************************************************
    //Paso 2: Solicitar permiso
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void requestPermission() {
@@ -140,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         }
     }
 
-    //*********************************Permiso llamada********************************************
+    //*********************************Permiso llamada**********************************************
     //Paso 2: Solicitar permiso
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void requestPermissionLlamada() {
@@ -155,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         }
     }
 
-    //*********************************Permiso microfono**********************************
+    //*********************************Permiso microfono********************************************
     //Paso 2: Solicitar permiso
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void requestPermissionMicrofono() {
@@ -170,8 +172,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         }
     }
 
-    //*********************************FIN************************************************
-
+    //Crea una hebra para la reproducción de los mensajes que recibe del cuidador.
     public void button_start() {
         sms = new Thread(new Runnable() {
             @Override
@@ -190,8 +191,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
 
 
-    //CREAR HEBRA
-
+    //Crea una hebra para la recepción de clientes TCP.
     public void nuevoHiloServidor(){
         hiloServidor nuevoHilo = new hiloServidor();
          nuevoHilo.start();
@@ -204,7 +204,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             if (result == TextToSpeech.LANG_NOT_SUPPORTED || result == TextToSpeech.LANG_MISSING_DATA) {
                 Log.e("TTS", "Este lenguaje no es soportado");
             } else {
-                //btn.setEnabled(true);
                 speakOut();
             }
         } else {

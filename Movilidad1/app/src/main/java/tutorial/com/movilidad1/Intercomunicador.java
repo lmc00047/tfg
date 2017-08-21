@@ -28,19 +28,26 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
 
+/**
+ * Esta clase provee a la aplicación de la funcionalidad de un intercomunicador entre el usuario y el cuidador.
+ * Para ello se utilizan dos hebras, una para la transmisión de mensajes de voz enviados por el usuario mediante UDP y otra
+ * para la recepción de mensajes de voz enviados por el cuidador mediante una hebra UDP.
+ *
+ * * El código para los permisos en versiones superiores a la versión 6 está disponible en:
+ * https://androidstudiofaqs.com/tutoriales/dar-permisos-a-aplicaciones-en-android-studio
+ * El código que permite enviar datagramas de audio está disponible en:
+ * https://www.youtube.com/watch?v=-0iAp6-gCOs
+ */
 
-public class Intercomunicador extends AppCompatActivity{
-
+public class Intercomunicador extends AppCompatActivity
+{
     private static final int MY_WRITE_EXTERNAL_STORAGE = 0;
-    private View mLayout;
-
     public static DatagramSocket s;
     Boolean a = false;
     public Handler UIHandler;
     public Thread Thread1 = null;
     public static final int SERVERPORT = 2510;
     public static final String SERVERIP = MiPerfil.ipcuidador.getText().toString();
-    public static int auxServer = 0;
     public static AudioRecord recorder = null;
     private static AudioTrack track = null;
     public static DataOutputStream mensaje;
@@ -53,7 +60,8 @@ public class Intercomunicador extends AppCompatActivity{
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.intercomunicador);
 
@@ -61,10 +69,13 @@ public class Intercomunicador extends AppCompatActivity{
         final Button botonSonido = (Button) findViewById(R.id.BotonSonido);
         final Button botonStart = (Button) findViewById(R.id.buttonPlay);
 
-        botonMicro.setOnClickListener(new View.OnClickListener() {
+        botonMicro.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View arg0) {
-                if (c == true) {
+            public void onClick(View arg0)
+            {
+                if (c == true)
+                {
                     botonMicro.setBackgroundDrawable(getResources().getDrawable(R.drawable.micro1));
                     c = false;
                     comprobarMicro = 0;
@@ -73,15 +84,17 @@ public class Intercomunicador extends AppCompatActivity{
                     c = true;
                     comprobarMicro = 1;
                 }
-
             }
 
         });
 
-        botonSonido.setOnClickListener(new View.OnClickListener() {
+        botonSonido.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View arg0) {
-                if (b == false) {
+            public void onClick(View arg0)
+            {
+                if (b == false)
+                {
                     botonSonido.setBackgroundDrawable(getResources().getDrawable(R.drawable.sonido));
                     b = true;
                     comprobarSonido = 0;
@@ -90,17 +103,17 @@ public class Intercomunicador extends AppCompatActivity{
                     botonSonido.setBackgroundDrawable(getResources().getDrawable(R.drawable.nosonido));
                     b = false;
                     comprobarSonido = 1;
-
                 }
-
             }
-
         });
 
-        botonStart.setOnClickListener(new View.OnClickListener() {
+        botonStart.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
-                if (a == false) {
+            public void onClick(View v)
+            {
+                if (a == false)
+                {
                     botonStart.setText(R.string.stop);
                     button_start();
                     a = true;
@@ -110,51 +123,46 @@ public class Intercomunicador extends AppCompatActivity{
                     a = false;
                 }
             }
-
-
         });
-
         verifyPermissionMicrofono();
     }
 
     //Paso 1. Verificar permiso
     @RequiresApi(api = Build.VERSION_CODES.M)
-    private void verifyPermissionMicrofono() {
-
-        //WRITE_EXTERNAL_STORAGE tiene implícito READ_EXTERNAL_STORAGE porque pertenecen al mismo
-        //grupo de permisos
-
+    private void verifyPermissionMicrofono()
+    {
         int writePermission = checkSelfPermission(Manifest.permission.RECORD_AUDIO);
 
         if (writePermission != PackageManager.PERMISSION_GRANTED) {
             requestPermissionMicrofono();
         } else {
             try {
-
                 try {
                     System.out.println("");
                     s = new DatagramSocket(9999);
 
-                } catch (SocketException e) {
+                } catch (SocketException e)
+                {
                     e.printStackTrace();
                     Toast.makeText(this,R.string.Error,Toast.LENGTH_SHORT).show();
                 }
                 cliente();
-            } catch (Exception e) {
+            } catch (Exception e)
+            {
                 Toast.makeText(this,R.string.ErrorMicrofono,Toast.LENGTH_SHORT).show();
-
            }
-
         }
     }
 
     //Paso 2: Solicitar permiso
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public void requestPermissionMicrofono() {
+    public void requestPermissionMicrofono()
+    {
         //shouldShowRequestPermissionRationale es verdadero solamente si ya se había mostrado
         //anteriormente el dialogo de permisos y el usuario lo negó
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                Manifest.permission.RECORD_AUDIO)) {
+                Manifest.permission.RECORD_AUDIO))
+        {
             requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO},
                     MY_WRITE_EXTERNAL_STORAGE);
         } else {
@@ -166,16 +174,18 @@ public class Intercomunicador extends AppCompatActivity{
 
     //Paso 3: Procesar respuesta de usuario
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
+    {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
         //Si el requestCode corresponde al que usamos para solicitar el permiso y
         //la respuesta del usuario fue positiva
-        if (requestCode == MY_WRITE_EXTERNAL_STORAGE) {
+        if (requestCode == MY_WRITE_EXTERNAL_STORAGE)
+        {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 try {
 
-                } catch (Exception e) {
+                } catch (Exception e)
+                {
                   Toast.makeText(getApplicationContext(), R.string.errormicro, Toast.LENGTH_LONG).show();
                 }
 
@@ -184,57 +194,56 @@ public class Intercomunicador extends AppCompatActivity{
             }
         }
     }
-    public synchronized void button_start() {
-        if (stopped == true) {
-
+    public synchronized void button_start()
+    {
+        if (stopped == true)
+        {
             recorder = new AudioRecord(MediaRecorder.AudioSource.MIC, 8000,
                     AudioFormat.CHANNEL_CONFIGURATION_MONO, AudioFormat.ENCODING_PCM_16BIT,
                     AudioRecord.getMinBufferSize(8000, AudioFormat.CHANNEL_CONFIGURATION_MONO,
                             AudioFormat.ENCODING_PCM_16BIT));
-
             int minSize = AudioTrack.getMinBufferSize(8000, AudioFormat.CHANNEL_CONFIGURATION_MONO, AudioFormat.ENCODING_PCM_16BIT);
-
             track = new AudioTrack(AudioManager.MODE_RINGTONE,
                     8000, AudioFormat.CHANNEL_CONFIGURATION_MONO, AudioFormat.ENCODING_PCM_16BIT, minSize,
                     AudioTrack.MODE_STREAM);
-
-
             tx = new Thread(new Intercomunicador.GrabaAudio());
-
-            rx = new Thread(new Runnable() {
+            rx = new Thread(new Runnable()
+            {
                 @Override
-                public void run() {
-                    //android.os.Process.setThreadPriority(Process.THREAD_PRIORITY_URGENT_AUDIO);
+                public void run()
+                {
                     byte[] bufferRecB = new byte[128 * 2]; //bit para recibir el audio
                     short[] bufferRecS = new short[128]; //short para reproducir el audio
                     DatagramPacket dp = new DatagramPacket(bufferRecB, bufferRecB.length);
                     track.play();
 
-                    while (stopped == false) {
+                    while (stopped == false)
+                    {
                         try {
-                            if (comprobarSonido == 0) {
+                            if (comprobarSonido == 0)
+                            {
                                 s.receive(dp);
-                                for (int i = 0; i < bufferRecS.length; i++) {
+                                for (int i = 0; i < bufferRecS.length; i++)
+                                {
                                     bufferRecS[i] = (short) (bufferRecB[i * 2] * 256 + bufferRecB[(i * 2) + 1]);
                                 }
                                 track.write(bufferRecB, 0, bufferRecB.length); //reproducir audio recibido
                             }
-                        } catch(IOException e){
+                        } catch(IOException e)
+                        {
                             e.printStackTrace();
                             Toast.makeText(getApplicationContext(),R.string.ErrorMicrofono,Toast.LENGTH_SHORT).show();
-
-
-                        } catch (Throwable throwable) {
+                        } catch (Throwable throwable)
+                        {
                             throwable.printStackTrace();
                             Toast.makeText(getApplicationContext(),R.string.ErrorMicrofono,Toast.LENGTH_SHORT).show();
-
                         }
                     }
-
                 }
             });
 
-            if (recorder.getState() == AudioRecord.STATE_INITIALIZED) {
+            if (recorder.getState() == AudioRecord.STATE_INITIALIZED)
+            {
                 stopped = false;
                 Log.d("Audio", "Recorder iniciado correctamente");
                 tx.start();
@@ -243,106 +252,104 @@ public class Intercomunicador extends AppCompatActivity{
         }
     }
 
-    public synchronized void button_stop() {
-
+    public synchronized void button_stop()
+    {
         stopped = true;
-        if (recorder != null) {
+        if (recorder != null)
+        {
             recorder.stop();
             recorder.release();
             recorder = null;
         }
-        if (track != null) {
+        if (track != null)
+        {
             track.stop();
             track.release();
             track = null;
         }
     }
-    public void cliente() {
-
+    public void cliente()
+    {
         UIHandler = new Handler();
         Thread1 = new Thread(new Intercomunicador.Thread1());
         Thread1.start();
     }
 
-    class Thread1 implements Runnable {
-        public void run() {
+    class Thread1 implements Runnable
+    {
+        public void run()
+        {
             Socket socket = null;
             try {
                 InetAddress serverAddr = InetAddress.getByName(SERVERIP);
                 socket = new Socket(serverAddr, SERVERPORT);
                 System.out.println("CLIENTE:Conexión establecida");
-
                 Intercomunicador.Thread2 commThread = new Intercomunicador.Thread2(socket);
                 new Thread(commThread).start();
                 return;
-            } catch (IOException e) {
+            } catch (IOException e)
+            {
                 e.printStackTrace();
-
-                //no
             }
         }
     }
-    class Thread2 implements Runnable {
+    class Thread2 implements Runnable
+    {
         private Socket clientSocket;
-
         private BufferedReader input;
         private BufferedWriter output;
-
-        public Thread2(Socket clientSocket) {
-
+        public Thread2(Socket clientSocket)
+        {
             this.clientSocket = clientSocket;
-
             try {
                 mensaje = new DataOutputStream(clientSocket.getOutputStream());
-            } catch (IOException e) {
+            } catch (IOException e)
+            {
                 e.printStackTrace();
-            //no
             }
         }
-        public void run() {
-
+        public void run()
+        {
             try {
-
                 mensaje.writeUTF(Hash.md5(MiPerfil.clave.getText().toString()));
-
-            } catch (IOException e) {
+            } catch (IOException e)
+            {
                 e.printStackTrace();
             }
-
         }
     }
-
-
-    public class GrabaAudio implements Runnable {
+    public class GrabaAudio implements Runnable
+    {
         @Override
-        public void run () {
+        public void run ()
+        {
             short buffer[];
-
             buffer = new short[128];
             byte[] vectores = new byte[128 * 2];
             DatagramPacket p;
 
-            if (recorder.getState() == AudioRecord.STATE_INITIALIZED) {
-
+            if (recorder.getState() == AudioRecord.STATE_INITIALIZED)
+            {
                 recorder.startRecording();
-                while (recorder.getRecordingState() == AudioRecord.RECORDSTATE_RECORDING) {
+                while (recorder.getRecordingState() == AudioRecord.RECORDSTATE_RECORDING)
+                {
                     recorder.read(buffer, 0, buffer.length); //capturar audio
-
-                    for (int i = 0; i < buffer.length; i++) {
+                    for (int i = 0; i < buffer.length; i++)
+                    {
                         vectores[i * 2] = (byte) (buffer[i] / 256);
                         vectores[(i * 2) + 1] = (byte) (vectores[i * 2] % 256);
                     }
                     try {
                         p = new DatagramPacket(vectores, vectores.length, InetAddress.getByName("" + MiPerfil.ipcuidador.getText()), 9999);
-                        if(comprobarMicro == 0) {
+                        if(comprobarMicro == 0)
+                        {
                             s.send(p);
                         }
-                    } catch (Exception e) {
+                    } catch (Exception e)
+                    {
                         e.printStackTrace();
-                        //no
                     }
                 }
-
             } else
                 button_stop();
         }

@@ -5,10 +5,11 @@ package tutorial.com.cuidadores;
  * Se realiza el hash para ofrecer seguridad, comprobando que el hash de ambas contraseñas,
  * la del cuidador y la del paciente, coinciden.
  * Si éstas no coinciden, la conexión no se establece.
+ * El código está disponible en :
+ * http://programacionextrema.com/2015/10/28/encriptar-en-md5-y-sha1-con-java/
  */
 public class Hash
 {
-    /* Retorna un hash a partir de un tipo y un texto */
     public static String getHash(String txt, String hashType)
     {
         try
@@ -30,14 +31,9 @@ public class Hash
         return null;
     }
 
-    // Retorna un hash MD5 a partir de un texto
-    public static String md5(String txt) {
+    // Calcula un hash MD5 a partir de un texto
+    public static String md5(String txt)
+    {
         return Hash.getHash(txt, "MD5");
     }
-
-    //Retorna un hash SHA1 a partir de un texto
-    public static String sha1(String txt) {
-        return Hash.getHash(txt, "SHA1");
-    }
-
 }

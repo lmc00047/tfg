@@ -12,13 +12,16 @@ import android.widget.EditText;
 
 import java.util.Locale;
 
+/**
+ * Clase encargada de leer los mensajes de texto del cuidador en voz alta.
+ * Utiliza para ello la API de google que permite la conversión de texto a voz.
+ */
 public class MessageReceiver extends BroadcastReceiver
 {
     public static String str = " ";
     private TextToSpeech tts;
+    private Button botonReproducir;
     public static EditText etx;
-    private Button btn;
-    public String textoSiri;
     public String numero;
 
     @Override
@@ -37,7 +40,6 @@ public class MessageReceiver extends BroadcastReceiver
                 {
                     messages[i] = SmsMessage.createFromPdu((byte[]) pdus[i]);
                     str += "Has recibido un mensaje del cuidador";
-                    //str += messages[i].getOriginatingAddress();
                     str += "\n";
                     str += "\n";
                     str += "\n";str += "\n";
@@ -48,13 +50,13 @@ public class MessageReceiver extends BroadcastReceiver
                 }
                 if (MiPerfil.tlfcuidador.getText().toString().equals(numero))
                 {
-                    //display the message
+                    //Muestra el mensaje
                     MainActivity.mensaje = str;
                     MainActivity.aux_sms=1;
                     str = "";
 
-                    //send a broadcast intent to update the SMS received
-                   Intent broadcastIntent = new Intent();
+                    //Enviar una intención de broatcast para actualizar el SMS recibido
+                    Intent broadcastIntent = new Intent();
                     broadcastIntent.setAction("SMS_RECEIVED_ACTION");
                     broadcastIntent.putExtra("message", str);
                     context.sendBroadcast(broadcastIntent);
@@ -73,7 +75,7 @@ public class MessageReceiver extends BroadcastReceiver
                 Log.e("TTS", "Este lenguaje no es soportado");
             } else
                 {
-                btn.setEnabled(true);
+                botonReproducir.setEnabled(true);
                 speakOut();
             }
         } else

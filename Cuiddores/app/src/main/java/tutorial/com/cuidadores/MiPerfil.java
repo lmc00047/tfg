@@ -10,10 +10,14 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-
-
-public class MiPerfil extends AppCompatActivity {
-
+/**
+ * Esta clase es la encargada de guardar las variables obtenidas de la vista Mi perfil, siendo éstas
+ * datos personales del usuario.
+ * Además de obtener las variables se encarga de guardarlas como preferencias compartidas y así las
+ * demás clases puedan acceder a ellas.
+ */
+public class MiPerfil extends AppCompatActivity
+{
     public static EditText ipcuidador;
     public static Button botonGuardar;
     public static TextView politica;
@@ -22,8 +26,8 @@ public class MiPerfil extends AppCompatActivity {
     public static String ipcuidadorS, claveS;
     public SharedPreferences prefe;
 
-
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.miperfil);
 
@@ -35,46 +39,40 @@ public class MiPerfil extends AppCompatActivity {
         prefe=getSharedPreferences("datos", Context.MODE_PRIVATE);
         mostrar();
 
-
-
-
-        botonGuardar.setOnClickListener(new View.OnClickListener() {
+        botonGuardar.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View arg0) {
-
+            public void onClick(View arg0)
+            {
                 ipcuidadorS = ipcuidador.getText().toString();
-               claveS = clave.getText().toString();
+                claveS = clave.getText().toString();
                 ejecutar();
-
             }
-
         });
-        politica.setOnClickListener(new View.OnClickListener(){
+        politica.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View arg0){
+            public void onClick(View arg0)
+            {
                 Intent i = new Intent(getApplication(), Politica.class);
                 startActivity(i);
             }
         });
-
         return ;
-
-
     }
-
-    public void ejecutar() {
+    public void ejecutar()
+    {
         SharedPreferences.Editor editor=prefe.edit();
         editor.putString("ipCuidador", ipcuidadorS);
         editor.putString("claveCuidador", claveS);
         editor.commit();
     }
 
-    public void mostrar(){
+    public void mostrar()
+    {
         clave.setText(prefe.getString("claveCuidador","").toString());
         ipcuidador.setText(prefe.getString("ipCuidador","").toString());
     }
-
-
 }
 
 

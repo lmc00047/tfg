@@ -9,7 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
+/**
+ * Esta clase se encarga de realizar la funcionalidad de la aplicación, es decir, cuando el botón
+ * del intercomunicador es pulsado llama a la clase Intercomunidor.java realizando así la acción
+ * requerida.
+ */
 public class FragmentBotones extends Fragment
 {
     private View mLayout;
@@ -18,20 +22,19 @@ public class FragmentBotones extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragmentbotones, container, false);
-
         Button botonRtp = (Button) view.findViewById(R.id.botonAzul);
 
-//-----------------------------------------BOTON AZUL----------------------------------------------------//
+    //-----------------------------------------BOTON AZUL-----------------------------------------//
     //OnClick del boton intercomunicador
-        botonRtp.setOnClickListener(new View.OnClickListener() {
+        botonRtp.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View arg0) {
             LanzarIntercomunicador();
         }
-
         });
 
-//-----------------------------------------FIN BOTON AZUL------------------------------------------------//
+    //-----------------------------------------FIN BOTON AZUL-------------------------------------//
         return view;
 
     }
@@ -40,6 +43,5 @@ public class FragmentBotones extends Fragment
             Intent i = new Intent(getContext(), Intercomunicador.class);
             startActivity(i);
         }
-
 }
 

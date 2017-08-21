@@ -10,7 +10,6 @@ android:layout_height="match_parent">
     android:layout_margin="5dp"
     android:layout_height="86dp"
     android:background="@drawable/movilidad"/>
-
  <TextView
      android:id="@+id/acercade"
      android:layout_width="wrap_content"
@@ -23,6 +22,4 @@ android:layout_height="match_parent">
      android:layout_below="@+id/imagen"
      android:layout_alignParentLeft="true"
      android:layout_alignParentStart="true" />
-
-
 </RelativeLayout>

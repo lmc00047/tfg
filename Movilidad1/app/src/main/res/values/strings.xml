@@ -70,6 +70,9 @@
  <string name="aceptPolitica">He leído y acepto la Politica de Privacidad</string>
  <string name="Error">Ha ocurrido un error de conexión</string>
  <string name="ErrorMicrofono">Para poder utilizar el intercomunicador hay que establecer la dirección IP del cuidador y la contraseña de conexión en configuración.</string>
+ <string name="ErrorSMS">ERROR SMS. Para poder enviar SMS hay que establecer un nombre en configuración.</string>
+ <string name="SMS">SMS enviado</string>
+ <string name="ErrorEmail">Para poder enviar un email es necesario configurar los parámetros en Configuración.</string>
 
 
 </resources>

@@ -1,18 +1,17 @@
 package tutorial.com.movilidad1;
         import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
-        import android.content.Intent;
-        import android.os.AsyncTask;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
-        import android.telephony.SmsManager;
-        import android.view.View;
+import android.telephony.SmsManager;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-        import java.io.Serializable;
-        import java.util.Properties;
+import java.io.Serializable;
+import java.util.Properties;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -24,15 +23,20 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 /**
- * Esta clase permite enviar un email a la dirección de correo electrónico del cuidador establecida en
- * la sección de Mi perfil.
- * También ofrece la posibilidad de enviar un SMS cuando se envía el email.
+ * Esta clase permite enviar un email a la dirección de correo electrónico del cuidador establecida
+ * en la sección de Mi perfil, ofreciendo la posibilidad de enviar un SMS cuando se envía el email.
  * Esta opción se establece en el menú Configuración, cambiando una variable.
+ *
+ * El código para poder enviar email está disponible en:
+ * https://www.youtube.com/watch?v=i-7tUdtFbIg&feature=youtu.be
+ *
+ * El código para establecer los permisos requeridos a partir de la versión 6 está disponible en:
+ * https://androidstudiofaqs.com/tutoriales/dar-permisos-a-aplicaciones-en-android-studio
+ *
  */
 public class EnviarEmail extends Activity implements View.OnClickListener, Serializable
 {
     static Session session;
-    static ProgressDialog pdialog;
     static Context context;
     static EditText reciep, sub, msg;
     static String rec, subject, textMessage, textoSiri;
@@ -53,16 +57,16 @@ public class EnviarEmail extends Activity implements View.OnClickListener, Seria
         setContentView(R.layout.sendemail);
 
         context = this;
-
         Button login = (Button) findViewById(R.id.btn_submit);
         reciep = (EditText) findViewById(R.id.et_to);
         sub = (EditText) findViewById(R.id.et_sub);
         msg = (EditText) findViewById(R.id.et_text);
 
-        textoSiri = getIntent().getExtras().getString("Siri");
         reciep.setText(MiPerfil.emailcuidador.getText().toString());
-        msg.setText(textoSiri);
 
+        //Recoge la salida de la clase VozTexto.java y lo muestra
+        textoSiri = getIntent().getExtras().getString("Siri");
+        msg.setText(textoSiri);
         login.setOnClickListener(this);
     }
 
@@ -73,6 +77,7 @@ public class EnviarEmail extends Activity implements View.OnClickListener, Seria
         subject = sub.getText().toString();
         textMessage = msg.getText().toString();
 
+        // Construcción del email
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.socketFactory.port", "465");
@@ -80,29 +85,36 @@ public class EnviarEmail extends Activity implements View.OnClickListener, Seria
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.port", "465");
 
-        session = Session.getDefaultInstance(props, new Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(MiPerfil.email.getText().toString(), MiPerfil.pass.getText().toString());
-            }
-        });
+        //Establece la autenticación del correo electrónico comprobando la contraseña y dirección del email.
 
+        if (MiPerfil.email.getText().toString().equals("") || MiPerfil.pass.getText().toString().equals("")|| MiPerfil.emailcuidador.getText().toString().equals("") ){
+
+            Toast.makeText(this,R.string.ErrorEmail,Toast.LENGTH_SHORT).show();
+        }
+        else {
+            session = Session.getDefaultInstance(props, new Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(MiPerfil.email.getText().toString(), MiPerfil.pass.getText().toString());
+                }
+            });
+        }
         RetreiveFeedTask task = new RetreiveFeedTask();
-        task.execute();
-        Toast.makeText(getApplicationContext(), "Email enviado", Toast.LENGTH_LONG).show();
+        AsyncTask<String, Void, String> aux = task.execute();
+        Toast.makeText(getApplicationContext(), ""+aux.getStatus(), Toast.LENGTH_LONG).show();
 
         /**
-         * Si la opción Email-SMS está activada, entonces además de enviar el email, le enviará un SMS al cuidador
-         * con el mismo contenido que en el email.
+         * Si la opción Email-SMS está activada, entonces además de enviar el email, enviará un SMS al cuidador
+         * con el mismo contenido que aparece en el email.
          */
         if(EnviarSmsoEmail.estadoSms==1)
         {
             try {
                 SmsManager smsManager = SmsManager.getDefault();
                 smsManager.sendTextMessage(MiPerfil.tlfcuidador.getText().toString(), null, textMessage, null, null);
-                Toast.makeText(getApplicationContext(), "SMS enviado", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), R.string.SMS, Toast.LENGTH_LONG).show();
             } catch (Exception e)
             {
-                Toast.makeText(getApplicationContext(), "ERROR SMS. Para poder enviar SMS hay que establecer un nombre en configuración.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), R.string.ErrorSMS, Toast.LENGTH_LONG).show();
                 Intent cuidador = new Intent(this.getApplicationContext(), Configuracion.class);
                 startActivity(cuidador);
             }

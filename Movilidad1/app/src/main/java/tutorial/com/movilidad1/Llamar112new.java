@@ -9,14 +9,17 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Toast;
 
+/**
+ * Clase que permite la realización de llamadas a emergencias.
+ * Si en Configuración se establece la opción automática entonces cuando el botón encargado de esta función
+ * sea pulsado, se realizará una llamada de forma automática.
+ */
 
 public class Llamar112new extends AppCompatActivity{
 
     private static final int MY_WRITE_EXTERNAL_STORAGE = 0;
-    private View mLayout;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -30,7 +33,6 @@ public class Llamar112new extends AppCompatActivity{
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void verifyPermissionLlamada()
     {
-        //WRITE_EXTERNAL_STORAGE tiene implícito READ_EXTERNAL_STORAGE porque pertenecen al mismo
         //grupo de permisos
 
         int writePermission = checkSelfPermission(Manifest.permission.CALL_PHONE);
@@ -92,10 +94,10 @@ public class Llamar112new extends AppCompatActivity{
         {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
             {
-                //saveComments();
                 try
                 {
-                    if (LlamadaDirecta112.estadoLlamada == 1) {
+                    if (LlamadaDirecta112.estadoLlamada == 1)
+                    {
                         Intent llamar112 = new Intent(Intent.ACTION_CALL, Uri.parse("tel:122"));
                         llamar112.setData(Uri.parse("tel:122"));
                         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {

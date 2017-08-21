@@ -8,46 +8,40 @@
     tools:context=".Intercomunicador">
 
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ip destino"
-        android:textStyle="bold"
-        android:textColor="#FFFFFF"
-        tools:layout_editor_absoluteX="25dp"
-        tools:layout_editor_absoluteY="33dp"
-        android:layout_alignBaseline="@+id/editText"
-        android:layout_alignBottom="@+id/editText"
-        android:layout_toLeftOf="@+id/buttonPlay"
-        android:layout_toStartOf="@+id/buttonPlay"
-        android:layout_marginRight="35dp"
-        android:layout_marginEnd="35dp" />
-
-    <EditText
-        android:layout_width="500dp"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteY="16dp"
-        tools:layout_editor_absoluteX="133dp"
-        android:id="@+id/editText"
-        android:textColorHint="#FFFFFF"
-        android:layout_marginTop="61dp"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/textView"
-        android:layout_toEndOf="@+id/textView" />
-
     <Button
         android:id="@+id/buttonPlay"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="148dp"
+        android:layout_marginBottom="33dp"
         android:background="@drawable/intercomunicador"
         android:text="@string/start"
         android:textColor="#FFFFFF"
         android:textSize="20dp"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="126dp"
-        tools:layout_editor_absoluteY="150dp" />
+        tools:layout_editor_absoluteY="150dp"
+        android:layout_above="@+id/BotonSonido"
+        android:layout_centerHorizontal="true" />
+    <Button
+        android:id="@+id/BotonSonido"
+        android:layout_width="110dp"
+        android:layout_height="113dp"
+        android:background="@drawable/botonsonido"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="32dp"
+        android:layout_marginEnd="32dp" />
+
+
+    <Button
+        android:id="@+id/BotonMicro"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:background="@drawable/botonmicro"
+        android:layout_marginLeft="38dp"
+        android:layout_marginStart="38dp"
+        android:layout_alignTop="@+id/BotonSonido"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

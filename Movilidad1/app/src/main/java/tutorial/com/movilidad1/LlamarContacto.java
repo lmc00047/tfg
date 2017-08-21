@@ -9,13 +9,15 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
-import android.view.View;
 import android.widget.Toast;
 
+/**
+ * Clase que permite la realización de llamadas al cuidador.
+ * Marcando el número de teléfono establecido en la configuración de Mi perfil.
+ */
 public class LlamarContacto extends Activity
 {
     private static final int MY_WRITE_EXTERNAL_STORAGE = 0;
-    private View mLayout;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
